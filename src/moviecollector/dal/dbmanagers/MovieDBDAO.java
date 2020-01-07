@@ -150,6 +150,24 @@ public class MovieDBDAO {
         return false;
     }
     
+    public boolean deleteMovieFromCatMovies(Movie movie) {
+        try (Connection con = dbs.getConnection()) {
+            String sql = "DELETE FROM CatMovies WHERE id = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            stmt.setInt(1, movie.getId());
+            
+            int updatedRows = stmt.executeUpdate();
+            return updatedRows > 0;
+            
+        } catch (SQLServerException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
 //        public static void main (String[] args)
 //    {
 //        MovieDBDAO movieDbdao = new MovieDBDAO();
