@@ -8,6 +8,7 @@ package moviecollector.dal.dbmanagers;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import moviecollector.be.Category;
+import moviecollector.be.Movie;
 import moviecollector.dal.dbaccess.DBSettings;
 
 /**
@@ -142,6 +144,42 @@ public class CategoryDBDAO {
             Logger.getLogger(CategoryDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    /**
+     * Retrieves all the movies in the specified category and puts them in a list
+          *
+     * @param category the category the movies should be read from
+     * @return a list of all the movies in the specified category
+     */    
+    public List<Movie> readAllCategoryMovies(Category category) {
+        try (Connection con = dbs.getConnection()) {
+            String sql = "SELECT * FROM CatMovies FULL OUTER JOIN Movies ON "
+                    + "CatMovies.movieId = movie.Id WHERE categoryId = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            stmt.setInt(1, category.getId());
+            ResultSet rs = stmt.executeQuery();
+            List<Movie> movies = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                Double rating = rs.getDouble("rating");
+                String filelink = rs.getString("filelink");
+                Date lastview = rs.getDate("lastview");                
+
+                Movie mov = new Movie(name, rating, filelink, lastview);
+                mov.setId(id);
+                
+                movies.add(mov);
+            }
+            return movies;
+        } catch (SQLServerException ex) {
+            Logger.getLogger(CategoryDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     
