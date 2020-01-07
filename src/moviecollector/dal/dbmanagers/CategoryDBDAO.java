@@ -45,7 +45,7 @@ public class CategoryDBDAO {
     public boolean createCategory(Category category) {
 
         try (Connection con = dbs.getConnection()) {
-            String sql = "INSERT INTO Categories (Name) VALUES (?);";
+            String sql = "INSERT INTO Categories (name) VALUES (?);";
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setString(1, category.getName());
@@ -149,8 +149,8 @@ public class CategoryDBDAO {
 //    {
 //        CategoryDBDAO categoryDbdao = new CategoryDBDAO();
 //        
-//        categoryDbdao.createCategory(new Category("Horror"));
-//        categoryDbdao.createCategory(new Category("Comedy"));
+//        categoryDbdao.createCategory(new Category("Drama"));
+//        categoryDbdao.createCategory(new Category("Thriller"));
 //        
 //        List<Category> categories = categoryDbdao.readAllCategories();
 //        
