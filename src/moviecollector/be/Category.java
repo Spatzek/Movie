@@ -5,6 +5,8 @@
  */
 package moviecollector.be;
 
+import java.util.List;
+
 /**
  *
  * @author fauxtistic
@@ -13,6 +15,7 @@ public class Category {
 
 private int id;
 private String name;
+private List<Movie> movies;
 
     public Category(String name) {
         this.name = name;
@@ -34,6 +37,14 @@ private String name;
         this.name = name;
     }
 
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }   
+    
     @Override
     public String toString() {
         return "Category{" + "id=" + id + ", name=" + name + '}';

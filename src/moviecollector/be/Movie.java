@@ -6,6 +6,7 @@
 package moviecollector.be;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Movie {
     private double rating;
     private String fileLink;
     private Date lastView;
+    private List<Category> categories;
 
     public Movie(String name, double rating, String fileLink, Date lastView) {
         this.name = name;
@@ -64,6 +66,14 @@ public class Movie {
 
     public void setLastView(Date lastView) {
         this.lastView = lastView;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
     
     @Override
