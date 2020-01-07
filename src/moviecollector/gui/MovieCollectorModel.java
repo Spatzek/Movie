@@ -37,6 +37,11 @@ public class MovieCollectorModel {
         return movieManager.readAllMovies();
     }
     
+    public List<Movie> readAllCategoryMovies(Category category)
+    {
+        return categoryManager.readAllCategoryMovies(category);
+    }
+    
     
     
 }

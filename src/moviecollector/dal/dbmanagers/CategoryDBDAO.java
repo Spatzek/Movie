@@ -155,14 +155,14 @@ public class CategoryDBDAO {
     public List<Movie> readAllCategoryMovies(Category category) {
         try (Connection con = dbs.getConnection()) {
             String sql = "SELECT * FROM CatMovies FULL OUTER JOIN Movies ON "
-                    + "CatMovies.movieId = movie.Id WHERE categoryId = ?;";
+                    + "CatMovies.movieId = Movies.Id WHERE categoryId = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
             
             stmt.setInt(1, category.getId());
             ResultSet rs = stmt.executeQuery();
             List<Movie> movies = new ArrayList<>();
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("movieId");
                 String name = rs.getString("name");
                 Double rating = rs.getDouble("rating");
                 String filelink = rs.getString("filelink");

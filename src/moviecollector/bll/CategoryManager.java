@@ -7,6 +7,7 @@ package moviecollector.bll;
 
 import java.util.List;
 import moviecollector.be.Category;
+import moviecollector.be.Movie;
 import moviecollector.dal.dbmanagers.CategoryDBDAO;
 
 /**
@@ -26,6 +27,11 @@ public class CategoryManager {
     public List<Category> readAllCategories()
     {
         return categoryDbdao.readAllCategories();
+    }
+    
+    public List<Movie> readAllCategoryMovies(Category category)
+    {
+        return categoryDbdao.readAllCategoryMovies(category);
     }
     
     
