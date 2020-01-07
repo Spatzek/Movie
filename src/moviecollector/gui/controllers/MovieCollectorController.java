@@ -78,7 +78,7 @@ public class MovieCollectorController implements Initializable {
     @FXML
     private void categorySelected(MouseEvent event) {
         Category category = categoryListView.getSelectionModel().getSelectedItem();
-        List<Movie> categoryMovies = movieModel.readAllCategoryMovies(category);
+        List<Movie> categoryMovies = (category.getId()!=1) ? movieModel.readAllCategoryMovies(category) : movieModel.readAllMovies();
         movieListView.setItems(FXCollections.observableArrayList(categoryMovies));
     }
     

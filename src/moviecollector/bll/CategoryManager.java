@@ -24,9 +24,24 @@ public class CategoryManager {
         
     }
     
+    public boolean createCategory(Category category)
+    {
+        return categoryDbdao.createCategory(category);
+    }
+    
     public List<Category> readAllCategories()
     {
         return categoryDbdao.readAllCategories();
+    }
+    
+    public boolean updateCategory(Category category)
+    {
+        return categoryDbdao.updateCategory(category);
+    }
+    
+    public boolean deleteCategory(Category category)
+    {
+        return categoryDbdao.deleteCategory(category);
     }
     
     public List<Movie> readAllCategoryMovies(Category category)

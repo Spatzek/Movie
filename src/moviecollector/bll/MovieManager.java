@@ -23,11 +23,29 @@ public class MovieManager {
         
     }
     
+    public boolean createMovie(Movie movie)
+    {
+        return movieDbdao.createMovie(movie);
+    }
+    
     public List<Movie> readAllMovies()
     {
         return movieDbdao.readAllMovies();
     }
     
+    public boolean updateMovie(Movie movie)
+    {
+        return movieDbdao.updateMovie(movie);
+    }
     
+    public boolean deleteMovie(Movie movie)
+    {
+        return movieDbdao.deleteMovie(movie);
+    }
+    
+    public boolean deleteMovieFromCatMovies(Movie movie)
+    {
+        return movieDbdao.deleteMovieFromCatMovies(movie);
+    }
     
 }
