@@ -5,10 +5,29 @@
  */
 package moviecollector.bll;
 
+import java.util.List;
+import moviecollector.be.Category;
+import moviecollector.dal.dbmanagers.CategoryDBDAO;
+
 /**
  *
  * @author fauxtistic
  */
 public class CategoryManager {
+    
+    private CategoryDBDAO categoryDbdao;
+
+    public CategoryManager() {
+        
+        categoryDbdao = new CategoryDBDAO();
+        
+    }
+    
+    public List<Category> readAllCategories()
+    {
+        return categoryDbdao.readAllCategories();
+    }
+    
+    
     
 }
