@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ComboBox layoutX="14.0" layoutY="60.0" prefHeight="26.0" prefWidth="211.0" promptText="Catagories" />
@@ -26,7 +25,7 @@
       <Button fx:id="addRating" layoutX="543.0" layoutY="388.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="38.0" text="Add" />
       <ComboBox fx:id="minimumRating" layoutX="223.0" layoutY="33.0" prefHeight="26.0" prefWidth="211.0" promptText="Minimum rating" />
       <Button fx:id="sortByTitle" layoutX="223.0" layoutY="6.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="211.0" text="Sort By Title" />
-      <Button fx:id="playMovieButton" layoutX="437.0" layoutY="2.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="211.0" text="Play" />
+      <Button fx:id="playMovieButton" layoutX="437.0" layoutY="6.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="211.0" text="Play" />
       <Button fx:id="searchEnterMovieTitle" layoutX="382.0" layoutY="60.0" mnemonicParsing="false" text="Search" />
    </children>
 </AnchorPane>
