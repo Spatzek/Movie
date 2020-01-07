@@ -8,8 +8,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="84.0" prefWidth="224.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField layoutX="61.0" layoutY="14.0" />
+      <TextField fx:id="genreTxtField" layoutX="61.0" layoutY="14.0" />
       <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre" />
-      <Button layoutX="17.0" layoutY="45.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="194.0" text="Add Genre" />
+      <Button fx:id="addGenre" layoutX="17.0" layoutY="45.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="194.0" text="Add Genre" />
    </children>
 </AnchorPane>

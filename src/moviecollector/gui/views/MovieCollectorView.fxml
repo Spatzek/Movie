@@ -22,10 +22,10 @@
       <Button fx:id="editCategoryButton" layoutX="126.0" layoutY="467.0" mnemonicParsing="false" text="Edit" />
       <Button fx:id="editMovieButton" layoutX="426.0" layoutY="467.0" mnemonicParsing="false" text="Edit" />
       <Button fx:id="clearFiltersButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Clear filter" />
-      <ComboBox layoutX="473.0" layoutY="466.0" prefHeight="26.0" prefWidth="105.0" promptText="Add Rating" />
-      <Button layoutX="579.0" layoutY="466.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="38.0" text="Add" />
-      <ComboBox layoutX="320.0" layoutY="14.0" prefWidth="150.0" promptText="Minimum rating" />
-      <Button layoutX="478.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Sort By Title" />
-      <Button layoutX="464.0" layoutY="43.0" mnemonicParsing="false" text="Search" />
+      <ComboBox fx:id="addRatingSelector" layoutX="473.0" layoutY="466.0" prefHeight="26.0" prefWidth="105.0" promptText="Add Rating" />
+      <Button fx:id="addRating" layoutX="579.0" layoutY="466.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="38.0" text="Add" />
+      <ComboBox fx:id="minimumRating" layoutX="320.0" layoutY="14.0" prefWidth="150.0" promptText="Minimum rating" />
+      <Button fx:id="sortByTitle" layoutX="478.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Sort By Title" />
+      <Button fx:id="searchEnterMovieTitle" layoutX="464.0" layoutY="43.0" mnemonicParsing="false" text="Search" />
    </children>
 </AnchorPane>
