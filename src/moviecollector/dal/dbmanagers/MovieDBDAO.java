@@ -150,28 +150,28 @@ public class MovieDBDAO {
         return false;
     }
     
-        public static void main (String[] args)
-    {
-        MovieDBDAO movieDbdao = new MovieDBDAO();
-        
-        Date date = new Date(System.currentTimeMillis());
-        
-        Movie movie1 = new Movie("Braveheart", 7.5, "mockfile", date);
-        Movie movie2 = new Movie("Dark Knight", 8.5, "mockfile", date);
-        
-        movieDbdao.createMovie(movie1);
-        movieDbdao.createMovie(movie2);
-        
-        List<Movie> movies = movieDbdao.readAllMovies();
-        
-        for (Movie movie : movies)
-        {
-            System.out.println(movie);
-        }
-        
-        
-        
-        
-    }
+//        public static void main (String[] args)
+//    {
+//        MovieDBDAO movieDbdao = new MovieDBDAO();
+//        
+//        Date date = new Date(System.currentTimeMillis());
+//        
+//        Movie movie1 = new Movie("Braveheart", 7.5, "mockfile", date);
+//        Movie movie2 = new Movie("Dark Knight", 8.5, "mockfile", date);
+//        
+//        movieDbdao.createMovie(movie1);
+//        movieDbdao.createMovie(movie2);
+//        
+//        List<Movie> movies = movieDbdao.readAllMovies();
+//        
+//        for (Movie movie : movies)
+//        {
+//            System.out.println(movie);
+//        }
+//        
+//        
+//        
+//        
+//    }
     
 }

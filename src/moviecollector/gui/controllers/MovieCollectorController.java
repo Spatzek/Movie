@@ -8,6 +8,7 @@ package moviecollector.gui.controllers;
 import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,6 +16,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import moviecollector.be.Category;
+import moviecollector.be.Movie;
+import moviecollector.gui.MovieCollectorModel;
 
 
 
@@ -24,10 +28,12 @@ import javafx.scene.control.TextField;
  */
 public class MovieCollectorController implements Initializable {
 
+    private MovieCollectorModel movieModel = new MovieCollectorModel();
+    
     @FXML
-    private ListView<?> movieListView;
+    private ListView<Movie> movieListView;
     @FXML
-    private ListView<?> categoryListView;
+    private ListView<Category> categoryListView;
     @FXML
     private Button deleteCategoryButton;
     @FXML
@@ -61,7 +67,8 @@ public class MovieCollectorController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        movieListView.setItems(FXCollections.observableArrayList(movieModel.readAllMovies()));
+        categoryListView.setItems(FXCollections.observableArrayList(movieModel.readAllCategories()));
     }    
     
 }
