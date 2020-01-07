@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="530.0" prefWidth="621.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviecollector.gui.controllers.MovieCollectorController">
+<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="621.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviecollector.gui.controllers.MovieCollectorController">
    <children>
       <ListView fx:id="movieListView" layoutX="321.0" layoutY="100.0" prefHeight="357.0" prefWidth="285.0" />
       <ListView fx:id="categoryListView" layoutX="14.0" layoutY="99.0" prefHeight="357.0" prefWidth="285.0" />
@@ -15,16 +15,17 @@
       <Button fx:id="addMovieButton" layoutX="379.0" layoutY="467.0" mnemonicParsing="false" text="Add" />
       <Button fx:id="deleteMovieButton" layoutX="321.0" layoutY="467.0" mnemonicParsing="false" text="Delete" />
       <Button fx:id="addCategoryButton" layoutX="73.0" layoutY="467.0" mnemonicParsing="false" text="Add" />
-      <Label layoutX="14.0" layoutY="65.0" prefHeight="25.0" prefWidth="285.0" text="Categories" />
-      <Label layoutX="321.0" layoutY="65.0" prefHeight="25.0" prefWidth="285.0" text="Movies" />
+      <Label layoutX="14.0" layoutY="77.0" prefHeight="25.0" prefWidth="285.0" text="Categories" />
+      <Label layoutX="320.0" layoutY="77.0" prefHeight="26.0" prefWidth="149.0" text="Movies" />
       <TextField fx:id="filterTitleField" layoutX="321.0" layoutY="43.0" promptText="Enter movie title..." />
-      <TextField fx:id="filterRatingField" layoutX="321.0" layoutY="14.0" promptText="Enter minimum rating..." />
-      <TextField fx:id="filterCategoryField" layoutX="14.0" layoutY="14.0" promptText="Enter category..." />
-      <ComboBox fx:id="sortComboBox" layoutX="493.0" layoutY="14.0" prefHeight="25.0" prefWidth="113.0" />
-      <Button fx:id="playMovieButton" layoutX="568.0" layoutY="467.0" mnemonicParsing="false" text="Play" />
+      <Button fx:id="playMovieButton" layoutX="536.0" layoutY="47.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" text="Play" />
       <Button fx:id="editCategoryButton" layoutX="126.0" layoutY="467.0" mnemonicParsing="false" text="Edit" />
       <Button fx:id="editMovieButton" layoutX="426.0" layoutY="467.0" mnemonicParsing="false" text="Edit" />
-      <Button fx:id="closeProgramButton" layoutX="564.0" layoutY="492.0" mnemonicParsing="false" text="Close" />
-      <Button fx:id="clearFiltersButton" layoutX="199.0" layoutY="14.0" mnemonicParsing="false" text="Clear filter" />
+      <Button fx:id="clearFiltersButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Clear filter" />
+      <ComboBox layoutX="473.0" layoutY="466.0" prefHeight="26.0" prefWidth="105.0" promptText="Add Rating" />
+      <Button layoutX="579.0" layoutY="466.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="38.0" text="Add" />
+      <ComboBox layoutX="320.0" layoutY="14.0" prefWidth="150.0" promptText="Minimum rating" />
+      <Button layoutX="478.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Sort By Title" />
+      <Button layoutX="464.0" layoutY="43.0" mnemonicParsing="false" text="Search" />
    </children>
 </AnchorPane>
