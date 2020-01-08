@@ -77,4 +77,14 @@ public class MovieCollectorModel {
         return movieManager.deleteMovieFromCatMovies(movie);
     }
     
+    public boolean isCategoryNameUsed(Category category)
+    {
+        return categoryManager.isCategoryNameUsed(category);
+    }
+    
+    public boolean saveCategory(Category category)
+    {
+        return categoryManager.saveCategory(category);
+    }
+    
 }

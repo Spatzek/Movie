@@ -19,10 +19,10 @@
          <effect>
             <InnerShadow />
          </effect></ListView>
-      <Button fx:id="deleteCategoryButton" layoutX="14.0" layoutY="467.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="deleteCategoryButton" layoutX="14.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleDeleteCategory" text="Delete" />
       <Button fx:id="addMovieButton" layoutX="379.0" layoutY="467.0" mnemonicParsing="false" text="Add" />
       <Button fx:id="deleteMovieButton" layoutX="321.0" layoutY="467.0" mnemonicParsing="false" text="Delete" />
-      <Button fx:id="addCategoryButton" layoutX="73.0" layoutY="467.0" mnemonicParsing="false" text="Add Catagories" />
+      <Button fx:id="addCategoryButton" layoutX="73.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleAddCategory" text="Add" />
       <Label layoutX="14.0" layoutY="77.0" prefHeight="25.0" prefWidth="285.0" text="Categories" />
       <Label layoutX="320.0" layoutY="77.0" prefHeight="26.0" prefWidth="38.0" text="Movies" />
       <TextField fx:id="filterTitleField" layoutX="367.0" layoutY="44.0" prefHeight="25.0" prefWidth="150.0" promptText="Enter movie title..." />
@@ -35,5 +35,7 @@
       <ComboBox fx:id="minimumRating" layoutX="388.0" layoutY="14.0" prefHeight="25.0" prefWidth="129.0" promptText="Minimum rating" />
       <Button fx:id="sortByTitle" layoutX="521.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Sort By Title" />
       <Button fx:id="searchEnterMovieTitle" layoutX="311.0" layoutY="44.0" mnemonicParsing="false" text="Search" />
+      <Button fx:id="editMovieButton" layoutX="434.0" layoutY="467.0" mnemonicParsing="false" text="Edit" />
+      <Button fx:id="editCategoryButton" layoutX="121.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleEditCategory" text="Edit" />
    </children>
 </AnchorPane>

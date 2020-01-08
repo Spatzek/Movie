@@ -49,6 +49,31 @@ public class CategoryManager {
         return categoryDbdao.readAllCategoryMovies(category);
     }
     
+    public boolean isCategoryNameUsed (Category category)
+    {
+        List<Category> categories = readAllCategories();
+        for (Category cat : categories)
+        {
+            if (cat.getName()==category.getName())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean saveCategory(Category category)
+    {
+        if (category.getId()==0)
+        {
+            return createCategory(category);
+        }
+        else
+        {
+            return updateCategory(category);
+        }
+    }
+    
     
     
 }
