@@ -4,23 +4,38 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="156.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="448.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="movieTitle" layoutX="48.0" layoutY="14.0" prefHeight="26.0" prefWidth="319.0" promptText="Enter movie title..." />
-      <Button fx:id="addMovie" layoutX="292.0" layoutY="118.0" mnemonicParsing="false" text="Add Movie" />
-      <TextField fx:id="fileLocation" layoutX="88.0" layoutY="86.0" prefHeight="26.0" prefWidth="279.0" promptText="c:\movie\movie\mp4" />
-      <Text layoutX="14.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre" />
-      <Text layoutX="13.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="33.33673095703125" />
-      <ComboBox fx:id="genreDropdown" layoutX="47.0" layoutY="50.0" prefHeight="26.0" prefWidth="319.0" promptText="Genres added is placed to the right..." />
-      <Text layoutX="14.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="File Location" />
-      <Button fx:id="movieAddGenre" layoutX="208.0" layoutY="118.0" mnemonicParsing="false" text="Add Genre" />
-      <ListView fx:id="movieTxtField" layoutX="370.0" layoutY="13.0" prefHeight="130.0" prefWidth="104.0">
+      <TextField fx:id="movieTitle" layoutX="40.0" layoutY="6.0" prefHeight="26.0" prefWidth="274.0" promptText="Enter movie title...">
          <effect>
-            <Glow />
+            <DropShadow />
+         </effect></TextField>
+      <Button fx:id="addMovie" layoutX="116.0" layoutY="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Add Movie">
+         <effect>
+            <DropShadow />
+         </effect></Button>
+      <Text layoutX="5.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre" wrappingWidth="43.73675537109375" />
+      <Text layoutX="5.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="43.73675537109375" />
+      <ComboBox fx:id="genreDropdown" layoutX="40.0" layoutY="42.0" prefHeight="26.0" prefWidth="273.0" promptText="Genres added is placed to the right...">
+         <effect>
+            <DropShadow />
+         </effect></ComboBox>
+      <Button fx:id="movieAddGenre" layoutX="228.0" layoutY="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Add Genre">
+         <effect>
+            <DropShadow />
+         </effect></Button>
+      <ListView fx:id="movieTxtField" layoutX="324.0" layoutY="6.0" prefHeight="102.0" prefWidth="115.0">
+         <effect>
+            <DropShadow />
          </effect></ListView>
+      <Button layoutX="5.0" layoutY="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Movie Location">
+         <effect>
+            <DropShadow />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>
