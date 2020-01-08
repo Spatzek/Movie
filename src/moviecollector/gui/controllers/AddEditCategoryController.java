@@ -52,7 +52,7 @@ public class AddEditCategoryController implements Initializable {
         Category category = new Category(name);
         category.setId(currentId);
         
-        if (!category.getName().isEmpty() || !movieModel.isCategoryNameUsed(category))
+        if (!category.getName().isEmpty() && !movieModel.isCategoryNameUsed(category))
         {
             Alert conAlert = new Alert(Alert.AlertType.CONFIRMATION);
             conAlert.initStyle(StageStyle.UTILITY);

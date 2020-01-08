@@ -92,6 +92,11 @@ public class MovieCollectorController implements Initializable {
     @FXML
     private void handleDeleteCategory(javafx.event.ActionEvent event) {
         Category category = categoryListView.getSelectionModel().getSelectedItem();
+        if (category.getId()==1)
+        {
+            showUneditableAlert();
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Confirm delete");
@@ -117,8 +122,13 @@ public class MovieCollectorController implements Initializable {
 
     @FXML
     private void handleEditCategory(javafx.event.ActionEvent event) throws IOException {
-        Stage primStage = (Stage) categoryListView.getScene().getWindow();
         Category category = categoryListView.getSelectionModel().getSelectedItem();
+        if (category.getId()==1)
+        {
+            showUneditableAlert();
+            return;
+        }
+        Stage primStage = (Stage) categoryListView.getScene().getWindow();        
         openWindow(primStage, category, "AddEditCategoryView.fxml", "Edit Category");
     }
     
@@ -153,5 +163,14 @@ public class MovieCollectorController implements Initializable {
         {
 
         }
+    }
+    
+    private void showUneditableAlert()
+    {
+        Alert errAlert = new Alert(Alert.AlertType.ERROR);
+        errAlert.setTitle("Error Dialog");
+        errAlert.setHeaderText("ERROR");
+        errAlert.setContentText(String.format("This category can not be deleted or edited"));
+        errAlert.showAndWait();
     }
 }
