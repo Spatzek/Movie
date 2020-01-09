@@ -6,17 +6,16 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="322.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="movieList" layoutY="3.0" prefHeight="333.0" prefWidth="323.0">
+      <ListView fx:id="genreList" layoutY="3.0" prefHeight="333.0" prefWidth="323.0">
          <effect>
             <DropShadow />
          </effect>
       </ListView>
-      <Button fx:id="addMovie" layoutY="366.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="103.0" text="Add Genre" />
-      <Button fx:id="deleteMovie" layoutX="104.0" layoutY="366.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="115.0" text="Delete Genre" />
-      <Button fx:id="addRating" layoutX="218.0" layoutY="366.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="103.0" text="Edit" />
-      <TextField layoutY="339.0" prefHeight="26.0" prefWidth="322.0" promptText="New genre name..." />
+      <Button fx:id="addGenreButton" layoutY="366.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="103.0" text="Add Genre" />
+      <Button fx:id="deleteGenreButton" layoutX="104.0" layoutY="366.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="115.0" text="Delete Genre" />
+      <Button fx:id="editButton" layoutX="218.0" layoutY="366.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="103.0" text="Edit" />
+      <TextField fx:id="newGenreTxtField" layoutY="339.0" prefHeight="26.0" prefWidth="322.0" promptText="New genre name..." />
    </children>
 </AnchorPane>
