@@ -10,29 +10,29 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="448.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviecollector.gui.controllers.AddEditMovieViewController">
    <children>
-      <TextField fx:id="movieTitle" layoutX="40.0" layoutY="6.0" prefHeight="26.0" prefWidth="274.0" promptText="Enter movie title...">
+      <TextField fx:id="titleTextField" layoutX="40.0" layoutY="6.0" prefHeight="26.0" prefWidth="274.0" promptText="Enter movie title...">
          <effect>
             <DropShadow />
          </effect></TextField>
-      <Button fx:id="addMovie" layoutX="116.0" layoutY="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Add Movie">
+      <Button fx:id="saveMovieButton" layoutX="116.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleSaveMovie" prefHeight="26.0" prefWidth="104.0" text="Save Movie">
          <effect>
             <DropShadow />
          </effect></Button>
       <Text layoutX="5.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre" wrappingWidth="43.73675537109375" />
       <Text layoutX="5.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="43.73675537109375" />
-      <ComboBox fx:id="genreDropdown" layoutX="40.0" layoutY="42.0" prefHeight="26.0" prefWidth="273.0" promptText="Genres added is placed to the right...">
+      <ComboBox fx:id="categoryCombobox" layoutX="40.0" layoutY="42.0" prefHeight="26.0" prefWidth="273.0" promptText="Genres added is placed to the right...">
          <effect>
             <DropShadow />
          </effect></ComboBox>
-      <Button fx:id="movieAddGenre" layoutX="228.0" layoutY="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Add Genre">
+      <Button fx:id="addCategoryButton" layoutX="228.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleAddCategory" prefHeight="26.0" prefWidth="85.0" text="Add Genre">
          <effect>
             <DropShadow />
          </effect></Button>
-      <ListView fx:id="movieTxtField" layoutX="324.0" layoutY="6.0" prefHeight="102.0" prefWidth="115.0">
+      <ListView fx:id="movieCatListView" layoutX="324.0" layoutY="6.0" prefHeight="102.0" prefWidth="115.0">
          <effect>
             <DropShadow />
          </effect></ListView>
-      <Button layoutX="5.0" layoutY="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="104.0" text="Movie Location">
+      <Button fx:id="movieLocationButton" layoutX="5.0" layoutY="80.0" mnemonicParsing="false" onAction="#handleMovieLocate" prefHeight="26.0" prefWidth="104.0" text="Movie Location">
          <effect>
             <DropShadow />
          </effect>

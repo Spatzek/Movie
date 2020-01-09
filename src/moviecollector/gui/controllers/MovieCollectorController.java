@@ -92,14 +92,19 @@ public class MovieCollectorController implements Initializable {
     @FXML
     private void handleDeleteCategory(javafx.event.ActionEvent event) {
         Category category = categoryListView.getSelectionModel().getSelectedItem();
+        if (category == null)
+        {
+        showErrorAlert("You must select a category to delete");
+        return;
+        }
         if (category.getId()==1)
         {
-            showUneditableAlert();
+            showErrorAlert("This category can not be deleted");
             return;
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Confirm delete");
+        alert.setTitle("Confirm deletion");
         alert.setHeaderText(null);
         alert.setContentText("Are you sure you want to delete: " + category.getName() + "?");
 
@@ -125,16 +130,12 @@ public class MovieCollectorController implements Initializable {
         Category category = categoryListView.getSelectionModel().getSelectedItem();
         if (category == null)
         {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error Dialog");
-        alert.setHeaderText("ERROR");
-        alert.setContentText(String.format("You must select a category before you can edit"));
-        alert.showAndWait();
+        showErrorAlert("You must select a category to edit");
         return;
         }
         if (category.getId()==1)
         {
-            showUneditableAlert();
+            showErrorAlert("This category can not be edited");
             return;
         }
         Stage primStage = (Stage) categoryListView.getScene().getWindow();        
@@ -172,14 +173,53 @@ public class MovieCollectorController implements Initializable {
         {
 
         }
-    }
-    
-    private void showUneditableAlert()
+    }       
+        
+    private void showErrorAlert(String message)
     {
         Alert errAlert = new Alert(Alert.AlertType.ERROR);
         errAlert.setTitle("Error Dialog");
         errAlert.setHeaderText("ERROR");
-        errAlert.setContentText(String.format("This category can not be deleted or edited"));
+        errAlert.setContentText(String.format(message));
         errAlert.showAndWait();
+    }
+    
+    @FXML
+    private void handleDeleteMovie(javafx.event.ActionEvent event) {
+        Movie movie = movieListView.getSelectionModel().getSelectedItem();
+        if (movie == null)
+        {
+        showErrorAlert("You must select a movie to delete");
+        return;
+        }
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Confirm deletion");
+        alert.setHeaderText(null);
+        alert.setContentText(String.format("%s%n%s%n%s", "Are you sure you want to delete: " + movie.getName() + "?", "Be in mind that this movie will be deleted across all categories.", "To remove categories from the movie, edit the movie instead."));
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK)
+        {
+            movieModel.deleteMovie(movie);  
+            movieModel.deleteMovieFromCatMovies(movie);
+            
+        } else
+        {
+            alert.close();
+        }
+    }    
+    
+    @FXML
+    private void handleAddMovie(javafx.event.ActionEvent event) {
+    }
+
+    @FXML
+    private void handleEditMovie(javafx.event.ActionEvent event) {
+    }
+    
+    @FXML
+    private void handlePlayMovie(javafx.event.ActionEvent event) {
     }
 }
