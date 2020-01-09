@@ -74,4 +74,9 @@ public class MovieManager {
         }
     }       
     
+    public List<Category> readAllMovieCategories(Movie movie)
+    {
+        return movieDbdao.readAllMovieCategories(movie);
+    }
+    
 }

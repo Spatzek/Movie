@@ -67,4 +67,40 @@ public class MovieCollectorModel {
         return categoryManager.saveCategory(category);
     }
     
+    public boolean isMovieNameUsed(Movie movie)
+    {
+        return movieManager.isMovieNameUsed(movie);
+    }
+    
+    public boolean saveMovie(Movie movie)
+    {
+        return movieManager.saveMovie(movie);
+    }
+    
+    public List<Category> readAllMovieCategories(Movie movie)
+    {
+        return movieManager.readAllMovieCategories(movie);
+    }
+    
+    public List<Category> readAllAvailableCategories(Movie movie)
+    {
+        List<Category> currentCats = readAllMovieCategories(movie);        
+        List<Category> availableCats = readAllCategories();
+        
+        for (Category movieCat : currentCats)
+        {
+            for (Category everyCat : availableCats)
+            {
+                if (movieCat.getId()==everyCat.getId())
+                {
+                    availableCats.remove(everyCat);
+                    break;
+                }
+            }
+        }
+        availableCats.remove(0);
+        return availableCats;
+    }    
+       
+    
 }
