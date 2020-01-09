@@ -52,25 +52,6 @@ public class AddEditCategoryController implements Initializable {
         Category category = new Category(name);
         category.setId(currentId);
         
-        if (!category.getName().isEmpty() && !movieModel.isCategoryNameUsed(category))
-        {
-            Alert conAlert = new Alert(Alert.AlertType.CONFIRMATION);
-            conAlert.initStyle(StageStyle.UTILITY);
-            conAlert.setTitle("Confirm change");
-            conAlert.setHeaderText(null);
-            String songString = category.toString();
-            conAlert.setContentText(String.format("%s%n%s", "Are you sure you want to add this:", songString));
-            Optional<ButtonType> result = conAlert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                movieModel.createCategory(category);
-                
-                
-                handleCancel(event);
-            } else {
-                conAlert.close();
-            }
-        }                    
-        
         if (category.getName().isEmpty())
         {
             Alert errAlert = new Alert(Alert.AlertType.ERROR);
@@ -88,6 +69,27 @@ public class AddEditCategoryController implements Initializable {
             errAlert.setContentText(String.format("%s%n%s", "Category name is already in use.", "Please enter another name."));
             errAlert.showAndWait();
         }
+        
+        if (!category.getName().isEmpty() && !movieModel.isCategoryNameUsed(category))
+        {
+            Alert conAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            conAlert.initStyle(StageStyle.UTILITY);
+            conAlert.setTitle("Confirm change");
+            conAlert.setHeaderText(null);
+            String categoryString = category.toString();
+            conAlert.setContentText(String.format("%s%n%s", "Are you sure you want to add this:", categoryString));
+            Optional<ButtonType> result = conAlert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                movieModel.saveCategory(category);
+                
+                
+                handleCancel(event);
+            } else {
+                conAlert.close();
+            }
+        }                    
+        
+        
         
     }
 

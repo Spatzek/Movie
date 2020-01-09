@@ -26,22 +26,12 @@ public class MovieCollectorModel {
         movieManager = new MovieManager();
         
     }
-    
-    public boolean createCategory(Category category)
-    {
-        return categoryManager.createCategory(category);
-    }
-    
+        
     public List<Category> readAllCategories()
     {
         return categoryManager.readAllCategories();
-    }
-    
-    public boolean updateCategory(Category category)
-    {
-        return categoryManager.updateCategory(category);
-    }
-    
+    }    
+        
     public boolean deleteCategory(Category category)
     {
         return categoryManager.deleteCategory(category);
@@ -52,19 +42,9 @@ public class MovieCollectorModel {
         return categoryManager.readAllCategoryMovies(category);
     }
     
-    public boolean createMovie(Movie movie)
-    {
-        return movieManager.createMovie(movie);
-    }
-    
     public List<Movie> readAllMovies()
     {
         return movieManager.readAllMovies();
-    }
-    
-    public boolean updateMovie(Movie movie)
-    {
-        return movieManager.updateMovie(movie);
     }
     
     public boolean deleteMovie(Movie movie)

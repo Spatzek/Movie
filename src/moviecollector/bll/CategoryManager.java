@@ -5,6 +5,8 @@
  */
 package moviecollector.bll;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import moviecollector.be.Category;
 import moviecollector.be.Movie;
@@ -54,7 +56,7 @@ public class CategoryManager {
         List<Category> categories = readAllCategories();
         for (Category cat : categories)
         {
-            if (cat.getName()==category.getName())
+            if (cat.getName().contentEquals(category.getName()))
             {
                 return true;
             }
@@ -72,7 +74,7 @@ public class CategoryManager {
         {
             return updateCategory(category);
         }
-    }
+    }       
     
     
     

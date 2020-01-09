@@ -123,6 +123,15 @@ public class MovieCollectorController implements Initializable {
     @FXML
     private void handleEditCategory(javafx.event.ActionEvent event) throws IOException {
         Category category = categoryListView.getSelectionModel().getSelectedItem();
+        if (category == null)
+        {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText("ERROR");
+        alert.setContentText(String.format("You must select a category before you can edit"));
+        alert.showAndWait();
+        return;
+        }
         if (category.getId()==1)
         {
             showUneditableAlert();
