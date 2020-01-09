@@ -17,6 +17,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import moviecollector.be.Category;
 import moviecollector.be.Movie;
 import moviecollector.dal.dbaccess.DBSettings;
 
@@ -152,7 +153,7 @@ public class MovieDBDAO {
     
     public boolean deleteMovieFromCatMovies(Movie movie) {
         try (Connection con = dbs.getConnection()) {
-            String sql = "DELETE FROM CatMovies WHERE id = ?;";
+            String sql = "DELETE FROM CatMovies WHERE movieId = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
             
             stmt.setInt(1, movie.getId());
@@ -167,6 +168,35 @@ public class MovieDBDAO {
         }
         return false;
     }
+    
+    public List<Category> readAllMovieCategories(Movie movie) {
+        try (Connection con = dbs.getConnection()) {
+            String sql = "SELECT * FROM CatMovies FULL OUTER JOIN Categories ON "
+                    + "CatMovies.categoryId = Categories.id WHERE movieId = ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            stmt.setInt(1, movie.getId());
+            ResultSet rs = stmt.executeQuery();
+            List<Category> categories = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt("categoryId");
+                String name = rs.getString("name");                                
+
+                Category cat = new Category(name);
+                cat.setId(id);
+                
+                categories.add(cat);
+            }
+            return categories;
+        } catch (SQLServerException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
     
 //        public static void main (String[] args)
 //    {

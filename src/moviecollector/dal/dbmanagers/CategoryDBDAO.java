@@ -155,7 +155,7 @@ public class CategoryDBDAO {
     public List<Movie> readAllCategoryMovies(Category category) {
         try (Connection con = dbs.getConnection()) {
             String sql = "SELECT * FROM CatMovies FULL OUTER JOIN Movies ON "
-                    + "CatMovies.movieId = Movies.Id WHERE categoryId = ?;";
+                    + "CatMovies.movieId = Movies.id WHERE categoryId = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
             
             stmt.setInt(1, category.getId());
