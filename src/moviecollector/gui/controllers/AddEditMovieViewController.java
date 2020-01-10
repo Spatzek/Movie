@@ -6,6 +6,7 @@
 package moviecollector.gui.controllers;
 
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,6 +30,8 @@ public class AddEditMovieViewController implements Initializable {
 
     private MovieCollectorModel movieModel;
     private int currentId;
+    private Date currentLastView;
+    private double currentRating;
     private ObservableList<Category> currentCats;
     private ObservableList<Category> availableCats;
     
@@ -44,6 +47,10 @@ public class AddEditMovieViewController implements Initializable {
     private ListView<Category> movieCatListView;
     @FXML
     private Button movieLocationButton;
+    @FXML
+    private TextField locationTextField;
+    @FXML
+    private Button removeCategoryButton;
 
     
 
@@ -66,11 +73,28 @@ public class AddEditMovieViewController implements Initializable {
     }
 
     @FXML
+    private void handleMovieLocate(ActionEvent event) {
+    }
+    
+    @FXML
     private void handleAddCategory(ActionEvent event) {
     }
 
     @FXML
-    private void handleMovieLocate(ActionEvent event) {
+    private void handleRemoveCategory(ActionEvent event) {
     }
+    
+    private void setText(Movie movie)
+    {
+        titleTextField.setText(movie.getName());
+        locationTextField.setText(movie.getFileLink());
+        currentId = movie.getId();
+        currentLastView = movie.getLastView();
+        currentRating = movie.getRating();
+    }
+    
+    
+
+    
     
 }

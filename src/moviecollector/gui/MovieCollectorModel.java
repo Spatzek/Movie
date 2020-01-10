@@ -72,9 +72,9 @@ public class MovieCollectorModel {
         return movieManager.isMovieNameUsed(movie);
     }
     
-    public boolean saveMovie(Movie movie)
+    public void saveMovie(Movie movie)
     {
-        return movieManager.saveMovie(movie);
+        movieManager.saveMovie(movie);
     }
     
     public List<Category> readAllMovieCategories(Movie movie)
@@ -101,6 +101,7 @@ public class MovieCollectorModel {
         availableCats.remove(0);
         return availableCats;
     }    
+    
        
     
 }

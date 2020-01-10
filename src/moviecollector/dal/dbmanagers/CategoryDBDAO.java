@@ -183,18 +183,7 @@ public class CategoryDBDAO {
     }
     
     
-//    public static void main (String[] args) throws IOException, SQLException
-//    {
-//        CategoryDBDAO categoryDbdao = new CategoryDBDAO();
-//        
-//        categoryDbdao.createCategory(new Category("Drama"));
-//        categoryDbdao.createCategory(new Category("Thriller"));
-//        
-//        List<Category> categories = categoryDbdao.readAllCategories();
-//        
-//        for (Category cat : categories){
-//            System.out.println(cat);
-//        }
-//        
-//    }
+    
+    
+
 }

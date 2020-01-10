@@ -196,30 +196,60 @@ public class MovieDBDAO {
         return null;
     }
     
+    /**
+     * Creates assocation between specified movie and category
+     * 
+     * @param category
+     * @param movie
+     * @return true if operation succeeds, else false
+     */
+    public boolean addMovieCategory(Category category, Movie movie) {
+
+        try (Connection con = dbs.getConnection()) {
+            String sql = "INSERT INTO CatMovies (categoryId, movieId) VALUES (?, ?);";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, category.getId());
+            stmt.setInt(2, movie.getId());
+
+            int updatedRows = stmt.executeUpdate();
+            return updatedRows > 0;
+            
+
+        } catch (SQLServerException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
     
-    
-//        public static void main (String[] args)
-//    {
-//        MovieDBDAO movieDbdao = new MovieDBDAO();
-//        
-//        Date date = new Date(System.currentTimeMillis());
-//        
-//        Movie movie1 = new Movie("Braveheart", 7.5, "mockfile", date);
-//        Movie movie2 = new Movie("Dark Knight", 8.5, "mockfile", date);
-//        
-//        movieDbdao.createMovie(movie1);
-//        movieDbdao.createMovie(movie2);
-//        
-//        List<Movie> movies = movieDbdao.readAllMovies();
-//        
-//        for (Movie movie : movies)
-//        {
-//            System.out.println(movie);
-//        }
-//        
-//        
-//        
-//        
-//    }
+    /**
+     * Removes assocation between specified movie and category
+     * 
+     * @param category
+     * @param movie
+     * @return true if operation succeeds, else false
+     */
+    public boolean removeMovieCategory(Category category, Movie movie) {
+
+        try (Connection con = dbs.getConnection()) {
+            String sql = "DELETE FROM CatMovies WHERE categoryId = ? AND movieId = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, category.getId());
+            stmt.setInt(2, movie.getId());
+
+            int updatedRows = stmt.executeUpdate();
+            return updatedRows > 0;
+            
+
+        } catch (SQLServerException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
     
 }

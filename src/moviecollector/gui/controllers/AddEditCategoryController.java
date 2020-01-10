@@ -54,20 +54,12 @@ public class AddEditCategoryController implements Initializable {
         
         if (category.getName().isEmpty())
         {
-            Alert errAlert = new Alert(Alert.AlertType.ERROR);
-            errAlert.setTitle("Error Dialog");
-            errAlert.setHeaderText("ERROR");
-            errAlert.setContentText(String.format("%s%n%s", "Category failed to save or update.", "Please enter a name."));
-            errAlert.showAndWait();
+            showErrorAlert("Please enter a name");
         }
         
         if (movieModel.isCategoryNameUsed(category))
         {
-            Alert errAlert = new Alert(Alert.AlertType.ERROR);
-            errAlert.setTitle("Error Dialog");
-            errAlert.setHeaderText("ERROR");
-            errAlert.setContentText(String.format("%s%n%s", "Category name is already in use.", "Please enter another name."));
-            errAlert.showAndWait();
+            showErrorAlert("Please enter a name not already in use");
         }
         
         if (!category.getName().isEmpty() && !movieModel.isCategoryNameUsed(category))
@@ -93,6 +85,15 @@ public class AddEditCategoryController implements Initializable {
         
     }
 
+    private void showErrorAlert(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText("ERROR");
+        alert.setContentText(String.format(message));
+        alert.showAndWait();
+    }
+    
     @FXML
     private void handleCancel(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();

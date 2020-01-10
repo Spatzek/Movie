@@ -62,21 +62,42 @@ public class MovieManager {
         return false;
     }
     
-    public boolean saveMovie(Movie movie)
+    public void saveMovie(Movie movie)
     {
         if (movie.getId()==0)
         {
-            return createMovie(movie);
+            createMovie(movie);
+            List<Category> categories = movie.getCategories();
+            for (Category category : categories)
+            {
+                addMovieCategory(category, movie);
+            }
         }
         else
         {
-            return updateMovie(movie);
+            updateMovie(movie);
+            List<Category> categories = movie.getCategories();
+            deleteMovieFromCatMovies(movie);
+            for (Category category : categories)
+            {
+                addMovieCategory(category, movie);
+            }
         }
     }       
     
     public List<Category> readAllMovieCategories(Movie movie)
     {
         return movieDbdao.readAllMovieCategories(movie);
+    }
+    
+    public boolean addMovieCategory(Category category, Movie movie)
+    {
+        return movieDbdao.addMovieCategory(category, movie);
+    }
+    
+    public boolean removeMovieCategory(Category category, Movie movie)
+    {
+        return movieDbdao.removeMovieCategory(category, movie);
     }
     
 }
