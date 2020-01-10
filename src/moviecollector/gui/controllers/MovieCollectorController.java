@@ -157,11 +157,11 @@ public class MovieCollectorController implements Initializable {
                 AddEditCategoryController controller = fxmlLoader.getController();
                 controller.setText((Category) obj);
             } 
-//            else if (obj instanceof Movie)
-//            {
-//                AddEditMovieController controller = fxmlLoader.getController();
-//                controller.setText((Movie) obj);
-//            }
+            else if (obj instanceof Movie)
+            {
+                AddEditMovieController controller = fxmlLoader.getController();
+                controller.setText((Movie) obj);
+            }
 
             stage.setTitle(windowMessage);
             stage.setScene(scene);
@@ -212,11 +212,21 @@ public class MovieCollectorController implements Initializable {
     }    
     
     @FXML
-    private void handleAddMovie(javafx.event.ActionEvent event) {
+    private void handleAddMovie(javafx.event.ActionEvent event) throws IOException {
+        Stage primStage = (Stage) movieListView.getScene().getWindow();
+        openWindow(primStage, null, "AddEditMovieView.fxml", "New Movie");
     }
 
     @FXML
-    private void handleEditMovie(javafx.event.ActionEvent event) {
+    private void handleEditMovie(javafx.event.ActionEvent event) throws IOException {
+        Movie movie = movieListView.getSelectionModel().getSelectedItem();
+        if (movie == null)
+        {
+        showErrorAlert("You must select a movie to edit");
+        return;
+        }        
+        Stage primStage = (Stage) movieListView.getScene().getWindow();
+        openWindow(primStage, movie, "AddEditMovieView.fxml", "Edit Movie");
     }
     
     @FXML

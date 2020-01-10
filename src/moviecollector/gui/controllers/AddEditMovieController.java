@@ -26,7 +26,7 @@ import moviecollector.gui.MovieCollectorModel;
  *
  * @author fauxtistic
  */
-public class AddEditMovieViewController implements Initializable {
+public class AddEditMovieController implements Initializable {
 
     private MovieCollectorModel movieModel;
     private int currentId;
@@ -84,7 +84,7 @@ public class AddEditMovieViewController implements Initializable {
     private void handleRemoveCategory(ActionEvent event) {
     }
     
-    private void setText(Movie movie)
+    public void setText(Movie movie)
     {
         titleTextField.setText(movie.getName());
         locationTextField.setText(movie.getFileLink());
