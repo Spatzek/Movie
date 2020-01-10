@@ -44,7 +44,10 @@ public class AddEditCategoryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         movieModel = new MovieCollectorModel();
     }    
-
+    /**
+     * Saves the category to the category list
+     * @param event 
+     */
     @FXML
     private void handleSaveCategory(ActionEvent event) {
         String name = categoryTextField.getText();
@@ -84,7 +87,11 @@ public class AddEditCategoryController implements Initializable {
         
         
     }
-
+/**
+ * 
+ * makes an error in case there is a dublication of names
+ * @param message 
+ */
     private void showErrorAlert(String message)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -81,7 +81,11 @@ public class MovieCollectorModel {
     {
         return movieManager.readAllMovieCategories(movie);
     }
-    
+    /**
+     * reads the categories
+     * @param movie
+     * @return 
+     */
     public List<Category> readAllAvailableCategories(Movie movie)
     {
         List<Category> currentCats = readAllMovieCategories(movie);        

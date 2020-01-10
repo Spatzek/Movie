@@ -100,7 +100,7 @@ public class MovieDBDAO {
     }
     
     /**
-     * Updates a movie with matching id in the database.
+     * Updates movie in the database.
      *
      * @param movie
      * @return True if update performed, else false

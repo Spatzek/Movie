@@ -149,7 +149,7 @@ public class CategoryDBDAO {
     
     /**
      * Retrieves all the movies in the specified category and puts them in a list
-          *
+     *
      * @param category the category the movies should be read from
      * @return a list of all the movies in the specified category
      */    

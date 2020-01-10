@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ *Opens the main sctipt window
  * @author jonas
  */
 public class MovieCollector extends Application {
