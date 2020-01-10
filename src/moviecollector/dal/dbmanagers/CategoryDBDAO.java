@@ -24,6 +24,7 @@ import moviecollector.dal.dbaccess.DBSettings;
 /**
  *
  * @author fauxtistic
+ * 
  */
 public class CategoryDBDAO {
     

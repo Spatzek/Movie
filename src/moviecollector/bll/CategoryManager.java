@@ -15,7 +15,9 @@ import moviecollector.dal.dbmanagers.CategoryDBDAO;
 /**
  *
  * @author fauxtistic
+ * Creates the class Categorymanager, and calls for the CategoryDBDAO
  */
+
 public class CategoryManager {
     
     private CategoryDBDAO categoryDbdao;

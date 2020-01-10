@@ -22,7 +22,8 @@ public class DBSettings {
 
     /**
      * Sets the user credentials, ip, and port configuration
-     *
+     * Also calls for DBSettings.txt for the passwords and usernames,
+     * Which is protected by .gitignore
      * @throws IOException
      */
     public DBSettings() throws IOException {
