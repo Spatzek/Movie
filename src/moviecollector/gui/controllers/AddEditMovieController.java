@@ -10,6 +10,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,12 +19,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import moviecollector.be.Category;
@@ -91,6 +94,49 @@ public class AddEditMovieController implements Initializable {
 
     @FXML
     private void handleSaveMovie(ActionEvent event) {
+        String name = titleTextField.getText();
+        String filelink = locationTextField.getText();
+        
+        Movie movie = new Movie(name, currentRating, filelink, currentLastView);
+        movie.setId(currentId);
+        movie.setCategories(currentCats);
+        
+        if (movie.getName().isEmpty())
+        {
+            showErrorAlert("Please enter a name");
+        }
+        
+        if (movieModel.isMovieNameUsed(movie))
+        {
+            showErrorAlert("Please enter a name not already in use");
+        }
+        
+        if (movie.getFileLink().isEmpty())
+        {
+            showErrorAlert("You must choose a file location");
+        }
+        
+        if (!movie.getName().isEmpty() && !movieModel.isMovieNameUsed(movie) && !movie.getFileLink().isEmpty())
+        {
+            Alert conAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            conAlert.initStyle(StageStyle.UTILITY);
+            conAlert.setTitle("Confirm change");
+            conAlert.setHeaderText(null);
+            String movieString = movie.toString();
+            conAlert.setContentText(String.format("%s%n%s", "Are you sure you want to add this:", movieString));
+            Optional<ButtonType> result = conAlert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                movieModel.saveMovie(movie);
+                
+                
+                handleCancel(event);
+            } else {
+                conAlert.close();
+            }
+        }              
+        
+        
+        
     }
 
     @FXML
