@@ -99,25 +99,22 @@ public class AddEditMovieController implements Initializable {
         
         Movie movie = new Movie(name, currentRating, filelink, currentLastView);
         movie.setId(currentId);
-        movie.setCategories(currentCats);
-        
+        movie.setCategories(currentCats);        
+                
         if (movie.getName().isEmpty())
         {
             showErrorAlert("Please enter a name");
+            return;
         }
         
         if (movieModel.isMovieNameUsed(movie))
         {
             showErrorAlert("Please enter a name not already in use");
-        }
-        
-        if (movie.getFileLink().isEmpty())
-        {
-            showErrorAlert("You must choose a file location");
-        }
-        
+            return;
+        }        
+                
         if (!movie.getName().isEmpty() && !movieModel.isMovieNameUsed(movie) && !movie.getFileLink().isEmpty())
-        {
+        {            
             Alert conAlert = new Alert(Alert.AlertType.CONFIRMATION);
             conAlert.initStyle(StageStyle.UTILITY);
             conAlert.setTitle("Confirm change");
@@ -169,7 +166,7 @@ public class AddEditMovieController implements Initializable {
             MediaPlayer mediaplayer = new MediaPlayer(media);
 
             mediaplayer.setOnReady(() -> {                
-                String title = (String) media.getMetadata().get("title");             
+                String title = (String) media.getMetadata().get("name");             
                 titleTextField.setText(title);                
             });
         }

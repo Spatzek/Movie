@@ -67,10 +67,12 @@ public class MovieManager {
         if (movie.getId()==0)
         {
             createMovie(movie);
+            List<Movie> allMovies = readAllMovies();
+            Movie newMovie = allMovies.get(allMovies.size()-1);
             List<Category> categories = movie.getCategories();
             for (Category category : categories)
             {
-                addMovieCategory(category, movie);
+                addMovieCategory(category, newMovie);
             }
         }
         else
