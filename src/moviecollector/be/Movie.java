@@ -76,6 +76,16 @@ public class Movie {
         this.categories = categories;
     }
     
+    public void addCategory(Category category)
+    {
+        categories.add(category);
+    }
+    
+    public void removeCategory(Category category)
+    {
+        categories.remove(category);
+    }
+    
     @Override
     public String toString() {
         return "Movie{" + "id=" + id + ", name=" + name + ", rating=" + rating + ", fileLink=" + fileLink + ", lastView=" + lastView + '}';

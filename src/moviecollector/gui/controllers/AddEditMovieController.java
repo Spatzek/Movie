@@ -5,7 +5,10 @@
  */
 package moviecollector.gui.controllers;
 
+import java.io.File;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -13,10 +16,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import moviecollector.be.Category;
 import moviecollector.be.Movie;
 import moviecollector.gui.MovieCollectorModel;
@@ -51,6 +60,8 @@ public class AddEditMovieController implements Initializable {
     private TextField locationTextField;
     @FXML
     private Button removeCategoryButton;
+    @FXML
+    private Button cancelButton;
 
     
 
@@ -59,6 +70,7 @@ public class AddEditMovieController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        movieModel = new MovieCollectorModel();
         Movie tempMovie = new Movie("", 0, "", null);
         tempMovie.setId(currentId);
         currentCats = FXCollections.observableArrayList(movieModel.readAllMovieCategories(tempMovie));
@@ -67,6 +79,15 @@ public class AddEditMovieController implements Initializable {
         movieCatListView.setItems(currentCats);
         
     }    
+    
+    private void showErrorAlert(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setHeaderText("ERROR");
+        alert.setContentText(String.format(message));
+        alert.showAndWait();
+    }
 
     @FXML
     private void handleSaveMovie(ActionEvent event) {
@@ -74,14 +95,73 @@ public class AddEditMovieController implements Initializable {
 
     @FXML
     private void handleMovieLocate(ActionEvent event) {
+        JFileChooser jfc = new JFileChooser();
+        FileNameExtensionFilter mp4Filter = new FileNameExtensionFilter(".mp4 Files", "mp4");
+        FileNameExtensionFilter mpeg4Filter = new FileNameExtensionFilter(".mpeg4 Files", "mpeg4");
+        FileNameExtensionFilter movFilter = new FileNameExtensionFilter(".mov Files", "mov");
+        jfc.setFileFilter(mp4Filter);
+        jfc.setFileFilter(mpeg4Filter);
+        jfc.setFileFilter(movFilter);
+        jfc.setAcceptAllFileFilterUsed(false);
+        jfc.setCurrentDirectory(new File("."));
+        
+        int returnValue = jfc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+
+            if (selectedFile.getAbsolutePath().contains("Movie\\Movie")) {
+                Path absolutePath = Paths.get(selectedFile.getAbsolutePath());
+                Path pathToProject = Paths.get(System.getProperty("user.dir"));
+                Path relativePath = pathToProject.relativize(absolutePath);
+                locationTextField.setText(relativePath.toString());
+            } else {
+                locationTextField.setText(selectedFile.getAbsolutePath());
+            }
+            
+            Media media = new Media(selectedFile.toURI().toString());
+
+            MediaPlayer mediaplayer = new MediaPlayer(media);
+
+            mediaplayer.setOnReady(() -> {                
+                String title = (String) media.getMetadata().get("title");             
+                titleTextField.setText(title);                
+            });
+        }
     }
     
     @FXML
     private void handleAddCategory(ActionEvent event) {
+        Category category = categoryCombobox.getSelectionModel().getSelectedItem();
+        if (category == null)
+        {
+            showErrorAlert("Please select a genre to add");
+            return;
+        }
+        availableCats.remove(category);
+        currentCats.add(category);
+        categoryCombobox.setItems(availableCats);
+        movieCatListView.setItems(currentCats);
+        
     }
 
     @FXML
     private void handleRemoveCategory(ActionEvent event) {
+        Category category = movieCatListView.getSelectionModel().getSelectedItem();
+        if (category == null)
+        {
+            showErrorAlert("Please select a genre to remove");
+            return;
+        }        
+        currentCats.remove(category);
+        availableCats.add(category);
+        categoryCombobox.setItems(availableCats);
+        movieCatListView.setItems(currentCats);
+    }
+    
+    @FXML
+    private void handleCancel(ActionEvent event) {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
     }
     
     public void setText(Movie movie)
@@ -90,8 +170,15 @@ public class AddEditMovieController implements Initializable {
         locationTextField.setText(movie.getFileLink());
         currentId = movie.getId();
         currentLastView = movie.getLastView();
-        currentRating = movie.getRating();
+        currentRating = movie.getRating();    
+        currentCats = FXCollections.observableArrayList(movieModel.readAllMovieCategories(movie));
+        availableCats = FXCollections.observableArrayList(movieModel.readAllAvailableCategories(movie));
+        movieCatListView.setItems(currentCats);
+        categoryCombobox.setItems(availableCats);       
+         
     }
+
+    
     
     
 
