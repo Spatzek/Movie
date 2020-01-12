@@ -88,7 +88,10 @@ public class Movie {
     
     @Override
     public String toString() {
-        return "Movie{" + "id=" + id + ", name=" + name + ", rating=" + rating + ", fileLink=" + fileLink + ", lastView=" + lastView + '}';
+        String movieRating = (getRating()==0) ? "Not rated" : "" + getRating();
+        String movieLastView = (getLastView()==null) ? "Never" : "" + getLastView();               
+            
+        return id + ", " + name + ", " + movieRating + ", last seen: " + movieLastView;
     }
            
 

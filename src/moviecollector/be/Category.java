@@ -47,7 +47,7 @@ private List<Movie> movies;
     
     @Override
     public String toString() {
-        return "Category{" + "id=" + id + ", name=" + name + '}';
+        return id + ", " + name;
     }
 
     
