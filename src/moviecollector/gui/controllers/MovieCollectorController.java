@@ -64,13 +64,13 @@ public class MovieCollectorController implements Initializable {
     @FXML
     private Button clearFiltersButton;
     @FXML
-    private ComboBox<?> addRatingSelector;
+    private ComboBox<Integer> addRatingSelector;
     @FXML
-    private ComboBox<?> minimumRating;
+    private ComboBox<Integer> minimumRating;
     @FXML
     private Button sortByTitle;
     @FXML
-    private Button searchEnterMovieTitle;
+    private Button searchButton;
     
     
     
@@ -78,7 +78,7 @@ public class MovieCollectorController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        addRatingSelector.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         categoryListView.setItems(FXCollections.observableArrayList(movieModel.readAllCategories()));
     }    
 
@@ -231,5 +231,29 @@ public class MovieCollectorController implements Initializable {
     
     @FXML
     private void handlePlayMovie(javafx.event.ActionEvent event) {
+        
+    }  
+
+    @FXML
+    private void handleAddRating(javafx.event.ActionEvent event) {
+        Movie movie = movieListView.getSelectionModel().getSelectedItem();
+        double rating = (double) addRatingSelector.getSelectionModel().getSelectedItem();
+        if (movie == null)
+        {
+            showErrorAlert("You must select a movie");
+            return;
+        }
+        if (rating == 0)
+        {
+            showErrorAlert("You must select a rating");
+            return;
+        }
+        movie.setRating(rating);
+        movieModel.updateMovie(movie);
+    }
+    
+    @FXML
+    private void handleSearch(javafx.event.ActionEvent event) {
+        
     }
 }

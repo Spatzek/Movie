@@ -47,6 +47,11 @@ public class MovieCollectorModel {
         return movieManager.readAllMovies();
     }
     
+    public boolean updateMovie(Movie movie)
+    {
+        return movieManager.updateMovie(movie);
+    }
+    
     public boolean deleteMovie(Movie movie)
     {
         return movieManager.deleteMovie(movie);
