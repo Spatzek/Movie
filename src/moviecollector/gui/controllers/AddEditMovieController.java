@@ -107,11 +107,19 @@ public class AddEditMovieController implements Initializable {
             return;
         }
         
+        // bug to be fixed: if when editing title is changed, and then changed back to original,
+        // will interpret as a name in use
         if (movieModel.isMovieNameUsed(movie))
         {
             showErrorAlert("Please enter a name not already in use");
             return;
-        }        
+        }   
+        
+        if (movie.getFileLink().isEmpty())
+        {
+            showErrorAlert("Please choose a file location");
+            return;
+        }
                 
         if (!movie.getName().isEmpty() && !movieModel.isMovieNameUsed(movie) && !movie.getFileLink().isEmpty())
         {            
@@ -140,11 +148,9 @@ public class AddEditMovieController implements Initializable {
     private void handleMovieLocate(ActionEvent event) {
         JFileChooser jfc = new JFileChooser();
         FileNameExtensionFilter mp4Filter = new FileNameExtensionFilter(".mp4 Files", "mp4");
-        FileNameExtensionFilter mpeg4Filter = new FileNameExtensionFilter(".mpeg4 Files", "mpeg4");
-        FileNameExtensionFilter movFilter = new FileNameExtensionFilter(".mov Files", "mov");
+        FileNameExtensionFilter mpeg4Filter = new FileNameExtensionFilter(".mpeg4 Files", "mpeg4");        
         jfc.setFileFilter(mp4Filter);
-        jfc.setFileFilter(mpeg4Filter);
-        jfc.setFileFilter(movFilter);
+        jfc.setFileFilter(mpeg4Filter);        
         jfc.setAcceptAllFileFilterUsed(false);
         jfc.setCurrentDirectory(new File("."));
         
@@ -159,16 +165,8 @@ public class AddEditMovieController implements Initializable {
                 locationTextField.setText(relativePath.toString());
             } else {
                 locationTextField.setText(selectedFile.getAbsolutePath());
-            }
+            }            
             
-            Media media = new Media(selectedFile.toURI().toString());
-
-            MediaPlayer mediaplayer = new MediaPlayer(media);
-
-            mediaplayer.setOnReady(() -> {                
-                String title = (String) media.getMetadata().get("name");             
-                titleTextField.setText(title);                
-            });
         }
     }
     
