@@ -43,6 +43,7 @@ import moviecollector.gui.MovieCollectorModel;
 public class MovieCollectorController implements Initializable {
 
     private MovieCollectorModel movieModel = new MovieCollectorModel();
+    private Category selectedCategory;
     
     @FXML
     private ListView<Movie> movieListView;
@@ -82,25 +83,24 @@ public class MovieCollectorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         addRatingSelector.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        categoryListView.setItems(FXCollections.observableArrayList(movieModel.readAllCategories()));
+        setCategories();
     }    
 
     @FXML
     private void categorySelected(MouseEvent event) {
-        Category category = categoryListView.getSelectionModel().getSelectedItem();
-        List<Movie> categoryMovies = (category.getId()!=1) ? movieModel.readAllCategoryMovies(category) : movieModel.readAllMovies();
-        movieListView.setItems(FXCollections.observableArrayList(categoryMovies));
+        selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
+        setCategoryMovies(selectedCategory);
     }
 
     @FXML
     private void handleDeleteCategory(javafx.event.ActionEvent event) {
-        Category category = categoryListView.getSelectionModel().getSelectedItem();
-        if (category == null)
+        selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
+        if (selectedCategory == null)
         {
         showErrorAlert("You must select a category to delete");
         return;
         }
-        if (category.getId()==1)
+        if (selectedCategory.getId()==1)
         {
             showErrorAlert("This category can not be deleted");
             return;
@@ -109,12 +109,15 @@ public class MovieCollectorController implements Initializable {
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Confirm deletion");
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to delete: " + category.getName() + "?");
+        alert.setContentText("Are you sure you want to delete: " + selectedCategory.getName() + "?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK)
         {
-            movieModel.deleteCategory(category);            
+            movieModel.deleteCategory(selectedCategory);
+            clear();
+            setCategoryMovies(selectedCategory);            
+            setCategories();
             
         } else
         {
@@ -130,19 +133,19 @@ public class MovieCollectorController implements Initializable {
 
     @FXML
     private void handleEditCategory(javafx.event.ActionEvent event) throws IOException {
-        Category category = categoryListView.getSelectionModel().getSelectedItem();
-        if (category == null)
+        selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
+        if (selectedCategory == null)
         {
         showErrorAlert("You must select a category to edit");
         return;
         }
-        if (category.getId()==1)
+        if (selectedCategory.getId()==1)
         {
             showErrorAlert("This category can not be edited");
             return;
         }
         Stage primStage = (Stage) categoryListView.getScene().getWindow();        
-        openWindow(primStage, category, "AddEditCategoryView.fxml", "Edit Category");
+        openWindow(primStage, selectedCategory, "AddEditCategoryView.fxml", "Edit Category");
     }
     
     public void openWindow(Stage primStage, Object obj, String viewFXML, String windowMessage)
@@ -263,5 +266,22 @@ public class MovieCollectorController implements Initializable {
     @FXML
     private void handleSearch(javafx.event.ActionEvent event) {
         
+    }
+    
+    private void setCategories()
+    {
+        categoryListView.setItems(FXCollections.observableArrayList(movieModel.readAllCategories()));
+    }
+    
+    private void setCategoryMovies(Category category)
+    {
+        List<Movie> categoryMovies = (category.getId()!=1) ? movieModel.readAllCategoryMovies(category) : movieModel.readAllMovies();
+        movieListView.setItems(FXCollections.observableArrayList(categoryMovies));
+    }
+    
+    private void clear()
+    {
+        categoryListView.getSelectionModel().clearSelection();
+        movieListView.getSelectionModel().clearSelection();
     }
 }
