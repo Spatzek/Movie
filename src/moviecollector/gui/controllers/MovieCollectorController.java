@@ -5,9 +5,12 @@
  */
 package moviecollector.gui.controllers;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -230,7 +233,17 @@ public class MovieCollectorController implements Initializable {
     }
     
     @FXML
-    private void handlePlayMovie(javafx.event.ActionEvent event) {
+    private void handlePlayMovie(javafx.event.ActionEvent event) throws IOException {
+        Movie movie = movieListView.getSelectionModel().getSelectedItem();
+        if (movie == null)
+        {
+            showErrorAlert("You must select a movie to play");
+            return;
+        }
+        File file = new File(movie.getFileLink());
+        Desktop.getDesktop().open(file);
+        movie.setLastView(new Date(System.currentTimeMillis()));
+        movieModel.updateMovie(movie);
         
     }  
 
@@ -242,12 +255,7 @@ public class MovieCollectorController implements Initializable {
         {
             showErrorAlert("You must select a movie");
             return;
-        }
-        if (rating == 0)
-        {
-            showErrorAlert("You must select a rating");
-            return;
-        }
+        }        
         movie.setRating(rating);
         movieModel.updateMovie(movie);
     }
