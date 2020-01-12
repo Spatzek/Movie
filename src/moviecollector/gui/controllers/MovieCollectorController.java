@@ -162,11 +162,13 @@ public class MovieCollectorController implements Initializable {
             {
                 AddEditCategoryController controller = fxmlLoader.getController();
                 controller.setText((Category) obj);
+                controller.setController(this);
             } 
             else if (obj instanceof Movie)
             {
                 AddEditMovieController controller = fxmlLoader.getController();
                 controller.setText((Movie) obj);
+                controller.setController(this);
             }
 
             stage.setTitle(windowMessage);
@@ -210,6 +212,7 @@ public class MovieCollectorController implements Initializable {
         {
             movieModel.deleteMovie(movie);  
             movieModel.deleteMovieFromCatMovies(movie);
+            setCategoryMovies(selectedCategory);
             
         } else
         {
@@ -261,6 +264,7 @@ public class MovieCollectorController implements Initializable {
         }        
         movie.setRating(rating);
         movieModel.updateMovie(movie);
+        setCategoryMovies(selectedCategory);
     }
     
     @FXML
@@ -268,12 +272,17 @@ public class MovieCollectorController implements Initializable {
         
     }
     
-    private void setCategories()
+    public Category getSelectedCategory()
+    {
+        return selectedCategory;
+    }
+    
+    public void setCategories()
     {
         categoryListView.setItems(FXCollections.observableArrayList(movieModel.readAllCategories()));
     }
     
-    private void setCategoryMovies(Category category)
+    public void setCategoryMovies(Category category)
     {
         List<Movie> categoryMovies = (category.getId()!=1) ? movieModel.readAllCategoryMovies(category) : movieModel.readAllMovies();
         movieListView.setItems(FXCollections.observableArrayList(categoryMovies));

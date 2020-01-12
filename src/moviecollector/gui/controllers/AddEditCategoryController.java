@@ -29,6 +29,7 @@ public class AddEditCategoryController implements Initializable {
 
     private MovieCollectorModel movieModel;
     private int currentId;
+    private MovieCollectorController movieController;
     
     @FXML
     private TextField categoryTextField;
@@ -76,7 +77,7 @@ public class AddEditCategoryController implements Initializable {
             Optional<ButtonType> result = conAlert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 movieModel.saveCategory(category);
-                
+                movieController.setCategories();
                 
                 handleCancel(event);
             } else {
@@ -105,6 +106,11 @@ public class AddEditCategoryController implements Initializable {
     private void handleCancel(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
+    }
+    
+    public void setController(MovieCollectorController movieController)
+    {
+        this.movieController = movieController;
     }
     
     public void setText(Category category)

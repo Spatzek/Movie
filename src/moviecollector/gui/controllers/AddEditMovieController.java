@@ -41,6 +41,7 @@ import moviecollector.gui.MovieCollectorModel;
 public class AddEditMovieController implements Initializable {
 
     private MovieCollectorModel movieModel;
+    private MovieCollectorController movieController;
     private int currentId;
     private Date currentLastView;
     private double currentRating;
@@ -132,7 +133,7 @@ public class AddEditMovieController implements Initializable {
             Optional<ButtonType> result = conAlert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 movieModel.saveMovie(movie);
-                
+                movieController.setCategoryMovies(movieController.getSelectedCategory());
                 
                 handleCancel(event);
             } else {
@@ -203,6 +204,11 @@ public class AddEditMovieController implements Initializable {
     private void handleCancel(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
+    }
+    
+    public void setController(MovieCollectorController movieController)
+    {
+        this.movieController = movieController;
     }
     
     public void setText(Movie movie)
