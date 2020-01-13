@@ -44,6 +44,9 @@ public class MovieCollectorController implements Initializable {
 
     private MovieCollectorModel movieModel = new MovieCollectorModel();
     private Category selectedCategory;
+    private boolean filterOn;
+    private boolean sortingByTitle;
+    private boolean sortingByRating;
     
     @FXML
     private ListView<Movie> movieListView;
@@ -72,9 +75,9 @@ public class MovieCollectorController implements Initializable {
     @FXML
     private ComboBox<Integer> minimumRating;
     @FXML
-    private Button sortByTitle;
-    @FXML
     private Button searchButton;
+    @FXML
+    private ComboBox<String> sortCombobox;
     
     
     
@@ -82,7 +85,12 @@ public class MovieCollectorController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        filterOn = false;
+        sortingByTitle = false;
+        sortingByRating = false;
         addRatingSelector.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        minimumRating.getItems().addAll(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        sortCombobox.getItems().addAll("Sort by title", "Sort by rating");
         setCategories();
     }    
 
@@ -277,10 +285,6 @@ public class MovieCollectorController implements Initializable {
         setCategoryMovies(selectedCategory);
     }
     
-    @FXML
-    private void handleSearch(javafx.event.ActionEvent event) {
-        
-    }
     
     public Category getSelectedCategory()
     {
@@ -302,5 +306,17 @@ public class MovieCollectorController implements Initializable {
     {
         categoryListView.getSelectionModel().clearSelection();
         movieListView.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    private void handleClearFilter(javafx.event.ActionEvent event) {
+    }
+
+    @FXML
+    private void handleSetFilter(javafx.event.ActionEvent event) {
+    }
+
+    @FXML
+    private void handleSorting(javafx.event.ActionEvent event) {
     }
 }
