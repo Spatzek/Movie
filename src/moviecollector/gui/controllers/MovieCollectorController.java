@@ -157,18 +157,27 @@ public class MovieCollectorController implements Initializable {
             fxmlLoader.setLocation(getClass().getResource(viewFXML));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
-
+            
+            if (viewFXML=="AddEditCategoryView.fxml")
+            {
+                AddEditCategoryController controller = fxmlLoader.getController();
+                controller.setController(this);
+            }
+            else if (viewFXML=="AddEditMovieView.fxml")
+            {
+                AddEditMovieController controller = fxmlLoader.getController();
+                controller.setController(this);
+            }
+            
             if (obj instanceof Category)
             {
                 AddEditCategoryController controller = fxmlLoader.getController();
-                controller.setText((Category) obj);
-                controller.setController(this);
+                controller.setText((Category) obj);                
             } 
             else if (obj instanceof Movie)
             {
                 AddEditMovieController controller = fxmlLoader.getController();
-                controller.setText((Movie) obj);
-                controller.setController(this);
+                controller.setText((Movie) obj);                
             }
 
             stage.setTitle(windowMessage);
@@ -250,6 +259,7 @@ public class MovieCollectorController implements Initializable {
         Desktop.getDesktop().open(file);
         movie.setLastView(new Date(System.currentTimeMillis()));
         movieModel.updateMovie(movie);
+        setCategoryMovies(selectedCategory);
         
     }  
 
