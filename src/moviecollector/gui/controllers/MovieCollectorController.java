@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -45,6 +46,8 @@ public class MovieCollectorController implements Initializable {
     private MovieCollectorModel movieModel = new MovieCollectorModel();
     private Category selectedCategory;
     private boolean filterOn;
+    private String searchTerm;
+    private double minRating;
     private boolean sortingByTitle;
     private boolean sortingByRating;
     
@@ -85,6 +88,8 @@ public class MovieCollectorController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        searchTerm = "";
+        minRating = 0;
         filterOn = false;
         sortingByTitle = false;
         sortingByRating = false;
@@ -299,6 +304,16 @@ public class MovieCollectorController implements Initializable {
     public void setCategoryMovies(Category category)
     {
         List<Movie> categoryMovies = (category.getId()!=1) ? movieModel.readAllCategoryMovies(category) : movieModel.readAllMovies();
+        
+        if(sortingByTitle)
+        {
+            categoryMovies.sort(Comparator.comparing(Movie::getName));
+        }
+        else if (sortingByRating)
+        {
+            categoryMovies.sort(Comparator.comparing(Movie::getRating));
+        }
+        
         movieListView.setItems(FXCollections.observableArrayList(categoryMovies));
     }
     
@@ -310,13 +325,44 @@ public class MovieCollectorController implements Initializable {
 
     @FXML
     private void handleClearFilter(javafx.event.ActionEvent event) {
+        filterOn = false;
+        searchTerm = "";
+        minRating = 0;
+        filterTitleField.clear();
+        minimumRating.getSelectionModel().clearSelection();
+        if (selectedCategory!=null)
+        {
+            setCategoryMovies(selectedCategory);
+        }
     }
 
     @FXML
     private void handleSetFilter(javafx.event.ActionEvent event) {
+        searchTerm = (!filterTitleField.getText().isEmpty()) ? filterTitleField.getText() : "";
+        minRating = (minimumRating.getSelectionModel().getSelectedItem()!=null) ? minimumRating.getSelectionModel().getSelectedItem() : 0;
+        filterOn = true;        
+        if (selectedCategory!=null)
+        {
+            setCategoryMovies(selectedCategory);
+        }
     }
 
     @FXML
     private void handleSorting(javafx.event.ActionEvent event) {
+        if (sortCombobox.getSelectionModel().getSelectedItem()=="Sort by title")
+        {
+            sortingByRating = false;
+            sortingByTitle = true;            
+        }
+        else if (sortCombobox.getSelectionModel().getSelectedItem()=="Sort by rating")
+        {
+            sortingByTitle = false;
+            sortingByRating = true;           
+        }
+        
+        if (selectedCategory!=null)
+        {
+            setCategoryMovies(selectedCategory);
+        }
     }
 }
