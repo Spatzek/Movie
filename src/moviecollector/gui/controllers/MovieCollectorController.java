@@ -304,7 +304,7 @@ public class MovieCollectorController implements Initializable {
     
     public void setCategoryMovies(Category category)
     {
-        List<Movie> categoryMovies = (category.getId()!=1) ? movieModel.readFilteredCategoryMovies(category, minRating, searchTerm) : movieModel.readFilteredMovies(minRating, searchTerm);
+        List<Movie> categoryMovies = (category.getId()!=1) ? movieModel.readAllCategoryMovies(category) : movieModel.readAllMovies();
         
         if(sortingByTitle)
         {

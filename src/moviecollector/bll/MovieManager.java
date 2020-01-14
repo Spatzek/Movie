@@ -34,11 +34,6 @@ public class MovieManager {
         return movieDbdao.readAllMovies();
     }
     
-    public List<Movie> readFilteredMovies(double minRating, String searchTerm)
-    {
-        return movieDbdao.readFilteredMovies(minRating, searchTerm);
-    }
-    
     public boolean updateMovie(Movie movie)
     {
         return movieDbdao.updateMovie(movie);

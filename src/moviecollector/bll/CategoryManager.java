@@ -53,11 +53,6 @@ public class CategoryManager {
         return categoryDbdao.readAllCategoryMovies(category);
     }
     
-    public List<Movie> readFilteredCategoryMovies(Category category, double minRating, String searchTerm)
-    {
-        return categoryDbdao.readFilteredCategoryMovies(category, minRating, searchTerm);
-    }
-    
     public boolean isCategoryNameUsed (Category category)
     {
         List<Category> categories = readAllCategories();
