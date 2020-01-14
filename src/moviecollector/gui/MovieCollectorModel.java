@@ -109,8 +109,7 @@ public class MovieCollectorModel {
         }
         availableCats.remove(0);
         return availableCats;
-    }    
-    
-       
+    }           
+           
     
 }

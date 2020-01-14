@@ -28,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -326,10 +327,15 @@ public class MovieCollectorController implements Initializable {
     @FXML
     private void handleClearFilter(javafx.event.ActionEvent event) {
         filterOn = false;
+        sortingByTitle = false;
+        sortingByRating = false;
         searchTerm = "";
         minRating = 0;
+        searchButton.setText("Set filter");
+        searchButton.setTextFill(Color.BLACK);
         filterTitleField.clear();
         minimumRating.getSelectionModel().clearSelection();
+        sortCombobox.getSelectionModel().clearSelection();
         if (selectedCategory!=null)
         {
             setCategoryMovies(selectedCategory);
@@ -340,7 +346,9 @@ public class MovieCollectorController implements Initializable {
     private void handleSetFilter(javafx.event.ActionEvent event) {
         searchTerm = (!filterTitleField.getText().isEmpty()) ? filterTitleField.getText() : "";
         minRating = (minimumRating.getSelectionModel().getSelectedItem()!=null) ? minimumRating.getSelectionModel().getSelectedItem() : 0;
-        filterOn = true;        
+        filterOn = true;     
+        searchButton.setText("New filter");
+        searchButton.setTextFill(Color.RED);
         if (selectedCategory!=null)
         {
             setCategoryMovies(selectedCategory);
