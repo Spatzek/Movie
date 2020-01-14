@@ -99,6 +99,36 @@ public class MovieDBDAO {
         return null;
     }
     
+    public List<Movie> readFilteredMovies(double minRating, String searchTerm) {
+        try (Connection con = dbs.getConnection()) {
+            String sql = "SELECT * FROM Movies WHERE rating >=? AND name LIKE ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);            
+           
+            stmt.setDouble(1, minRating);
+            stmt.setString(2, "%" + searchTerm + "%");
+            ResultSet rs = stmt.executeQuery();
+            List<Movie> movies = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                Double rating = rs.getDouble("rating");
+                String filelink = rs.getString("filelink");
+                Date lastview = rs.getDate("lastview");                
+
+                Movie mov = new Movie(name, rating, filelink, lastview);
+                mov.setId(id);
+                
+                movies.add(mov);
+            }
+            return movies;
+        } catch (SQLServerException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     /**
      * Updates movie in the database.
      *

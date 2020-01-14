@@ -183,7 +183,51 @@ public class CategoryDBDAO {
         return null;
     }
     
+     
+    public List<Movie> readFilteredCategoryMovies(Category category, double minRating, String searchTerm) {
+        try (Connection con = dbs.getConnection()) {
+            String sql = "WITH x AS(SELECT movieID FROM CatMovies FULL OUTER JOIN Movies "
+                       + "ON CatMovies.movieId = Movies.id WHERE categoryId = ?) SELECT * "
+                       + "FROM Movies JOIN x ON x.MovieID = Movies.id WHERE rating >=? AND name LIKE ?;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            stmt.setInt(1, category.getId());
+            stmt.setDouble(2, minRating);
+            stmt.setString(3, "%" + searchTerm + "%");
+            ResultSet rs = stmt.executeQuery();
+            List<Movie> movies = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt("movieId");
+                String name = rs.getString("name");
+                Double rating = rs.getDouble("rating");
+                String filelink = rs.getString("filelink");
+                Date lastview = rs.getDate("lastview");                
+
+                Movie mov = new Movie(name, rating, filelink, lastview);
+                mov.setId(id);
+                
+                movies.add(mov);
+            }
+            return movies;
+        } catch (SQLServerException ex) {
+            Logger.getLogger(CategoryDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     
+    public static void main(String[] args)
+    {
+        CategoryDBDAO categoryDbdao = new CategoryDBDAO();
+        Category category = new Category("");
+        category.setId(4);
+        List<Movie> movies = categoryDbdao.readFilteredCategoryMovies(category, 0, "");
+        for (Movie movie : movies)
+        {
+            System.out.println(movie);
+        }
+    }
     
     
 

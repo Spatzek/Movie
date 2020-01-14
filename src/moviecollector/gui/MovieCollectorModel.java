@@ -47,6 +47,11 @@ public class MovieCollectorModel {
         return movieManager.readAllMovies();
     }
     
+    public List<Movie> readFilteredMovies(double minRating, String searchTerm)
+    {
+        return movieManager.readFilteredMovies(minRating, searchTerm);
+    }
+    
     public boolean updateMovie(Movie movie)
     {
         return movieManager.updateMovie(movie);
@@ -86,6 +91,12 @@ public class MovieCollectorModel {
     {
         return movieManager.readAllMovieCategories(movie);
     }
+    
+    public List<Movie> readFilteredCategoryMovies(Category category, double minRating, String searchTerm)
+    {
+        return categoryManager.readFilteredCategoryMovies(category, minRating, searchTerm);
+    }
+    
     /**
      * reads the categories
      * @param movie
@@ -110,6 +121,7 @@ public class MovieCollectorModel {
         availableCats.remove(0);
         return availableCats;
     }           
-           
+    
+    
     
 }
