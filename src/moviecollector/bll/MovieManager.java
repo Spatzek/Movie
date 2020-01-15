@@ -58,10 +58,10 @@ public class MovieManager {
     
     public boolean isMovieNameUsed (Movie movie)
     {
-        List<Movie> movies = readAllMovies();
+        List<Movie> movies = readAllMovies();        
         for (Movie mov : movies)
         {
-            if (mov.getName().contentEquals(movie.getName()))
+            if (mov.getName().contentEquals(movie.getName()) && mov.getId()!=movie.getId())
             {
                 return true;
             }

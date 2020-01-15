@@ -85,7 +85,7 @@ public class CategoryManager {
         List<Category> categories = readAllCategories();
         for (Category cat : categories)
         {
-            if (cat.getName().contentEquals(category.getName()))
+            if (cat.getName().contentEquals(category.getName()) && cat.getId()!=category.getId())
             {
                 return true;
             }
