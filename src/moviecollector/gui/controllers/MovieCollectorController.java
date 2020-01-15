@@ -48,7 +48,7 @@ public class MovieCollectorController implements Initializable {
 
     private MovieCollectorModel movieModel = new MovieCollectorModel();    
     private List<Category> selectedCategories;
-    private Category selectedCategory;
+    //private Category selectedCategory;
     private boolean filterOn;
     private String searchTerm;
     private double minRating;
@@ -114,14 +114,13 @@ public class MovieCollectorController implements Initializable {
     }
 
     @FXML
-    private void handleDeleteCategory(javafx.event.ActionEvent event) {
-        selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
-        if (selectedCategory == null)
+    private void handleDeleteCategory(javafx.event.ActionEvent event) {        
+        if (selectedCategories == null || selectedCategories.size()>1)
         {
-        showErrorAlert("You must select a category to delete");
+        showErrorAlert("You must select a single category to delete");
         return;
         }
-        if (selectedCategory.getId()==1)
+        if (selectedCategories.get(0).getId()==1)
         {
             showErrorAlert("This category can not be deleted");
             return;
@@ -130,6 +129,7 @@ public class MovieCollectorController implements Initializable {
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Confirm deletion");
         alert.setHeaderText(null);
+        Category selectedCategory = selectedCategories.get(0);
         alert.setContentText("Are you sure you want to delete: " + selectedCategory.getName() + "?");
 
         Optional<ButtonType> result = alert.showAndWait();
@@ -153,18 +153,18 @@ public class MovieCollectorController implements Initializable {
     }
 
     @FXML
-    private void handleEditCategory(javafx.event.ActionEvent event) throws IOException {
-        selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
-        if (selectedCategory == null)
+    private void handleEditCategory(javafx.event.ActionEvent event) throws IOException {        
+        if (selectedCategories == null || selectedCategories.size()>1)
         {
-        showErrorAlert("You must select a category to edit");
+        showErrorAlert("You must select a single category to edit");
         return;
         }
-        if (selectedCategory.getId()==1)
+        if (selectedCategories.get(0).getId()==1)
         {
             showErrorAlert("This category can not be edited");
             return;
         }
+        Category selectedCategory = selectedCategories.get(0);
         Stage primStage = (Stage) categoryListView.getScene().getWindow();        
         openWindow(primStage, selectedCategory, "AddEditCategoryView.fxml", "Edit Category");
     }
