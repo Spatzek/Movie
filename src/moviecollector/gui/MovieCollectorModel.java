@@ -92,9 +92,9 @@ public class MovieCollectorModel {
         return movieManager.readAllMovieCategories(movie);
     }
     
-    public List<Movie> readFilteredCategoryMovies(Category category, double minRating, String searchTerm)
+    public List<Movie> readFilteredCategoryMovies(List<Category> selectedCategories, double minRating, String searchTerm)
     {
-        return categoryManager.readFilteredCategoryMovies(category, minRating, searchTerm);
+        return categoryManager.readFilteredCategoryMovies(selectedCategories, minRating, searchTerm);
     }
     
     /**

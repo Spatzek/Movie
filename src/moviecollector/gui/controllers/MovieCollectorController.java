@@ -26,6 +26,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -44,7 +45,8 @@ import moviecollector.gui.MovieCollectorModel;
  */
 public class MovieCollectorController implements Initializable {
 
-    private MovieCollectorModel movieModel = new MovieCollectorModel();
+    private MovieCollectorModel movieModel = new MovieCollectorModel();    
+    private List<Category> selectedCategories;
     private Category selectedCategory;
     private boolean filterOn;
     private String searchTerm;
@@ -96,14 +98,16 @@ public class MovieCollectorController implements Initializable {
         sortingByRating = false;
         addRatingSelector.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         minimumRating.getItems().addAll(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        sortCombobox.getItems().addAll("Sort by title", "Sort by rating");
+        sortCombobox.getItems().addAll("Sort by title", "Sort by rating");        
+        categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         setCategories();
+        
     }    
 
     @FXML
     private void categorySelected(MouseEvent event) {
-        selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
-        setCategoryMovies(selectedCategory);
+        selectedCategories = categoryListView.getSelectionModel().getSelectedItems();
+        setCategoryMovies(selectedCategories);
     }
 
     @FXML
@@ -130,7 +134,7 @@ public class MovieCollectorController implements Initializable {
         {
             movieModel.deleteCategory(selectedCategory);
             clear();
-            setCategoryMovies(selectedCategory);            
+            setCategoryMovies(selectedCategories);            
             setCategories();
             
         } else
@@ -235,7 +239,7 @@ public class MovieCollectorController implements Initializable {
         {
             movieModel.deleteMovie(movie);  
             movieModel.deleteMovieFromCatMovies(movie);
-            setCategoryMovies(selectedCategory);
+            setCategoryMovies(selectedCategories);
             
         } else
         {
@@ -273,7 +277,7 @@ public class MovieCollectorController implements Initializable {
         Desktop.getDesktop().open(file);
         movie.setLastView(new Date(System.currentTimeMillis()));
         movieModel.updateMovie(movie);
-        setCategoryMovies(selectedCategory);
+        setCategoryMovies(selectedCategories);
         
     }  
 
@@ -288,13 +292,12 @@ public class MovieCollectorController implements Initializable {
         }        
         movie.setRating(rating);
         movieModel.updateMovie(movie);
-        setCategoryMovies(selectedCategory);
-    }
+        setCategoryMovies(selectedCategories);        
+    }            
     
-    
-    public Category getSelectedCategory()
+    public List<Category> getSelectedCategories()
     {
-        return selectedCategory;
+        return selectedCategories;
     }
     
     public void setCategories()
@@ -302,9 +305,9 @@ public class MovieCollectorController implements Initializable {
         categoryListView.setItems(FXCollections.observableArrayList(movieModel.readAllCategories()));
     }
     
-    public void setCategoryMovies(Category category)
+    public void setCategoryMovies(List<Category> selectedCategories)
     {
-        List<Movie> categoryMovies = (category.getId()!=1) ? movieModel.readFilteredCategoryMovies(category, minRating, searchTerm) : movieModel.readFilteredMovies(minRating, searchTerm);
+        List<Movie> categoryMovies = movieModel.readFilteredCategoryMovies(selectedCategories, minRating, searchTerm);
         
         if(sortingByTitle)
         {
@@ -336,9 +339,9 @@ public class MovieCollectorController implements Initializable {
         filterTitleField.clear();
         minimumRating.getSelectionModel().clearSelection();
         sortCombobox.getSelectionModel().clearSelection();
-        if (selectedCategory!=null)
+        if (selectedCategories!=null)
         {
-            setCategoryMovies(selectedCategory);
+            setCategoryMovies(selectedCategories);
         }
     }
 
@@ -349,9 +352,9 @@ public class MovieCollectorController implements Initializable {
         filterOn = true;     
         searchButton.setText("New filter");
         searchButton.setTextFill(Color.RED);
-        if (selectedCategory!=null)
+        if (selectedCategories!=null)
         {
-            setCategoryMovies(selectedCategory);
+            setCategoryMovies(selectedCategories);
         }
     }
 
@@ -368,9 +371,9 @@ public class MovieCollectorController implements Initializable {
             sortingByRating = true;           
         }
         
-        if (selectedCategory!=null)
+        if (selectedCategories!=null)
         {
-            setCategoryMovies(selectedCategory);
+            setCategoryMovies(selectedCategories);
         }
     }
 }

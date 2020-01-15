@@ -217,17 +217,7 @@ public class CategoryDBDAO {
         return null;
     }
     
-    public static void main(String[] args)
-    {
-        CategoryDBDAO categoryDbdao = new CategoryDBDAO();
-        Category category = new Category("");
-        category.setId(4);
-        List<Movie> movies = categoryDbdao.readFilteredCategoryMovies(category, 0, "");
-        for (Movie movie : movies)
-        {
-            System.out.println(movie);
-        }
-    }
+    
     
     
 
