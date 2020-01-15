@@ -126,14 +126,13 @@ public class AddEditMovieController implements Initializable {
             conAlert.initStyle(StageStyle.UTILITY);
             conAlert.setResizable(true);
             conAlert.setTitle("Confirm change");
-            conAlert.setHeaderText(null);
-            String movieString = movie.toString();
+            conAlert.setHeaderText(null);            
             String movieCategories = "Categories: ";
             for (Category category : movie.getCategories())
             {
                 movieCategories = movieCategories + "'" + category.getName() + "'" + "   ";
             }
-            conAlert.setContentText(String.format("%s%n%s%n%s", "Are you sure you want to add this:", movieString, movieCategories));
+            conAlert.setContentText(String.format("%s%n%s%n%s", "Are you sure you want to save this:", movie.getName(), movieCategories));
             Optional<ButtonType> result = conAlert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 movieModel.saveMovie(movie);

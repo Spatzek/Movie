@@ -363,12 +363,12 @@ public class MovieCollectorController implements Initializable {
 
     @FXML
     private void handleSorting(javafx.event.ActionEvent event) {
-        if (sortCombobox.getSelectionModel().getSelectedItem()=="Sort by title")
+        if (sortCombobox.getSelectionModel().getSelectedIndex()==0)
         {
             sortingByRating = false;
             sortingByTitle = true;            
         }
-        else if (sortCombobox.getSelectionModel().getSelectedItem()=="Sort by rating")
+        else if (sortCombobox.getSelectionModel().getSelectedIndex()==1)
         {
             sortingByTitle = false;
             sortingByRating = true;           
