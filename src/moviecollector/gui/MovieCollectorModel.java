@@ -19,6 +19,7 @@ public class MovieCollectorModel {
     
     private CategoryManager categoryManager;
     private MovieManager movieManager;
+    
 
     public MovieCollectorModel() {
         
@@ -122,6 +123,15 @@ public class MovieCollectorModel {
         return availableCats;
     }           
     
+    public List<Movie> readBadOldMovies(double minRating, int years)
+    {
+        return movieManager.readBadOldMovies(minRating, years);
+    }
+    
+    public void deleteBadOldMovies(List<Movie> movies)
+    {
+        movieManager.deleteBadOldMovies(movies);
+    }
     
     
 }

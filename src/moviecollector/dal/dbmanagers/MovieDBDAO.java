@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -280,6 +281,38 @@ public class MovieDBDAO {
             Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public List<Movie> readBadOldMovies(double maxRating, int years)
+    {                
+        try (Connection con = dbs.getConnection()) {
+            String sql = "SELECT * FROM Movies WHERE rating <=? AND lastview <=?;";
+            PreparedStatement stmt = con.prepareStatement(sql);            
+           
+            LocalDate oldDate = LocalDate.now().minusYears(years);
+            stmt.setDouble(1, maxRating);
+            stmt.setString(2, oldDate.toString());
+            ResultSet rs = stmt.executeQuery();
+            List<Movie> movies = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                Double rating = rs.getDouble("rating");
+                String filelink = rs.getString("filelink");
+                Date lastview = rs.getDate("lastview");                
+
+                Movie mov = new Movie(name, rating, filelink, lastview);
+                mov.setId(id);
+                
+                movies.add(mov);
+            }
+            return movies;
+        } catch (SQLServerException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     

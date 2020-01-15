@@ -29,6 +29,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -53,6 +54,8 @@ public class MovieCollectorController implements Initializable {
     private double minRating;
     private boolean sortingByTitle;
     private boolean sortingByRating;
+    private static final double DELETION_CANDIDATE_MAX_RATING = 6;
+    private static final int DELETION_CANDIDATE_AGE_IN_YEARS = 2;
     
     @FXML
     private ListView<Movie> movieListView;
@@ -101,7 +104,7 @@ public class MovieCollectorController implements Initializable {
         sortCombobox.getItems().addAll("Sort by title", "Sort by rating");        
         categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         setCategories();
-        
+        showDeletionSuggestionAlert();
     }    
 
     @FXML
@@ -375,5 +378,36 @@ public class MovieCollectorController implements Initializable {
         {
             setCategoryMovies(selectedCategories);
         }
+    }
+    
+    private void showDeletionSuggestionAlert()
+    {
+        List<Movie> movies = movieModel.readBadOldMovies(DELETION_CANDIDATE_MAX_RATING, DELETION_CANDIDATE_AGE_IN_YEARS);
+        if (!movies.isEmpty())
+        {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.setResizable(true);
+        alert.setTitle("Old movies with low ratings");
+        alert.setHeaderText(null);
+        String movieTitles = "";
+        for (Movie movie : movies)
+        {
+            movieTitles = movieTitles + movie.getName() + "   ";
+        }
+        String warning  = "These movies are rated below " + DELETION_CANDIDATE_MAX_RATING + " and are more than " + DELETION_CANDIDATE_AGE_IN_YEARS + " years old.";
+        alert.setContentText(String.format("%s%n%s%n%n%s", warning, "Press ok to delete them, otherwise cancel.", movieTitles));
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK)
+        {
+            movieModel.deleteBadOldMovies(movies);
+            
+        } else
+        {
+            alert.close();
+        }
+    }
     }
 }

@@ -5,6 +5,8 @@
  */
 package moviecollector.bll;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import moviecollector.be.Category;
 import moviecollector.be.Movie;
@@ -107,4 +109,20 @@ public class MovieManager {
         return movieDbdao.removeMovieCategory(category, movie);
     }
     
+    public List<Movie> readBadOldMovies(double minRating, int years)
+    {
+        return movieDbdao.readBadOldMovies(minRating, years);
+    }             
+    
+    public void deleteBadOldMovies(List<Movie> movies)
+    {
+        for (Movie movie : movies)
+        {
+            deleteMovie(movie);
+            deleteMovieFromCatMovies(movie);
+        }
+    }       
+              
+               
+        
 }
