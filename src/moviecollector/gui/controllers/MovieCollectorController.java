@@ -394,7 +394,7 @@ public class MovieCollectorController implements Initializable {
         String movieTitles = "";
         for (Movie movie : movies)
         {
-            movieTitles = movieTitles + movie.getName() + "   ";
+            movieTitles = movieTitles + movie.getName() + ", last seen: " + movie.getLastView() + "\n";
         }
         String warning  = "These movies are rated below " + DELETION_CANDIDATE_MAX_RATING + " and are more than " + DELETION_CANDIDATE_AGE_IN_YEARS + " years old.";
         alert.setContentText(String.format("%s%n%s%n%n%s", warning, "Press ok to delete them, otherwise cancel.", movieTitles));
