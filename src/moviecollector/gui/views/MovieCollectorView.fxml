@@ -7,35 +7,58 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="621.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviecollector.gui.controllers.MovieCollectorController">
+<AnchorPane id="AnchorPane" prefHeight="432.0" prefWidth="621.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviecollector.gui.controllers.MovieCollectorController">
    <children>
-      <ListView fx:id="movieListView" layoutX="322.0" layoutY="105.0" prefHeight="351.0" prefWidth="285.0">
+      <ListView fx:id="movieListView" layoutX="316.0" layoutY="100.0" prefHeight="296.0" prefWidth="295.0">
          <effect>
             <InnerShadow />
          </effect></ListView>
-      <ListView fx:id="categoryListView" layoutX="14.0" layoutY="105.0" onMouseClicked="#categorySelected" prefHeight="351.0" prefWidth="285.0">
+      <ListView fx:id="categoryListView" layoutX="14.0" layoutY="61.0" onMouseClicked="#categorySelected" prefHeight="334.0" prefWidth="295.0">
          <effect>
             <InnerShadow />
          </effect></ListView>
-      <Button fx:id="deleteCategoryButton" layoutX="14.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleDeleteCategory" text="Delete" />
-      <Button fx:id="addMovieButton" layoutX="379.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleAddMovie" text="Add" />
-      <Button fx:id="deleteMovieButton" layoutX="321.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleDeleteMovie" text="Delete" />
-      <Button fx:id="addCategoryButton" layoutX="73.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleAddCategory" text="Add" />
-      <Label layoutX="14.0" layoutY="77.0" prefHeight="25.0" prefWidth="285.0" text="Categories" />
-      <Label layoutX="320.0" layoutY="77.0" prefHeight="26.0" prefWidth="38.0" text="Movies" />
-      <TextField fx:id="filterTitleField" layoutX="323.0" layoutY="14.0" prefHeight="25.0" prefWidth="150.0" promptText="Enter movie title..." />
-      <Button fx:id="playMovieButton" layoutX="521.0" layoutY="44.0" mnemonicParsing="false" onAction="#handlePlayMovie" prefHeight="53.0" prefWidth="85.0" text="Play">
+      <Button fx:id="deleteCategoryButton" layoutX="14.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleDeleteCategory" text="Delete" />
+      <Button fx:id="addMovieButton" layoutX="385.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleAddMovie" text="Add" />
+      <Button fx:id="deleteMovieButton" layoutX="319.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleDeleteMovie" text="Delete" />
+      <Button fx:id="addCategoryButton" layoutX="79.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleAddCategory" text="Add" />
+      <Label layoutX="14.0" layoutY="10.0" prefHeight="34.0" prefWidth="70.0" text="Categories" textFill="#844d4d">
+         <effect>
+            <SepiaTone />
+         </effect>
+         <font>
+            <Font name="Calibri Bold Italic" size="14.0" />
+         </font></Label>
+      <Label layoutX="315.0" layoutY="66.0" prefHeight="34.0" prefWidth="57.0" text="Movies" textFill="#845555">
+         <font>
+            <Font name="Calibri Bold Italic" size="14.0" />
+         </font>
+         <effect>
+            <SepiaTone />
+         </effect></Label>
+      <TextField fx:id="filterTitleField" layoutX="360.0" layoutY="14.0" prefHeight="26.0" prefWidth="252.0" promptText="Enter movie title..." />
+      <Button fx:id="playMovieButton" layoutX="517.0" layoutY="43.0" mnemonicParsing="false" onAction="#handlePlayMovie" prefHeight="52.0" prefWidth="93.0" text="Play">
          <effect>
             <DropShadow />
-         </effect></Button>
-      <Button fx:id="clearFiltersButton" layoutX="442.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleClearFilter" text="Clear filter" />
-      <ComboBox fx:id="addRatingSelector" layoutX="477.0" layoutY="467.0" onAction="#handleAddRating" prefHeight="26.0" prefWidth="129.0" promptText="Add Rating" />
-      <ComboBox fx:id="minimumRating" layoutX="477.0" layoutY="14.0" prefHeight="25.0" prefWidth="129.0" promptText="Minimum rating" />
-      <Button fx:id="searchButton" layoutX="325.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleSetFilter" prefHeight="25.0" prefWidth="110.0" text="Set filter" />
-      <Button fx:id="editMovieButton" layoutX="434.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleEditMovie" text="Edit" />
-      <Button fx:id="editCategoryButton" layoutX="121.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleEditCategory" text="Edit" />
-      <ComboBox fx:id="sortCombobox" layoutX="377.0" layoutY="77.0" onAction="#handleSorting" prefHeight="25.0" prefWidth="136.0" promptText="Sort..." />
+         </effect>
+         <font>
+            <Font name="System Bold Italic" size="24.0" />
+         </font></Button>
+      <Button fx:id="clearFiltersButton" layoutX="431.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleClearFilter" prefHeight="26.0" prefWidth="78.0" text="Clear filter">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Button>
+      <ComboBox fx:id="addRatingSelector" layoutX="477.0" layoutY="400.0" onAction="#handleAddRating" prefHeight="26.0" prefWidth="124.0" promptText="Add Rating" />
+      <ComboBox fx:id="minimumRating" layoutX="228.0" layoutY="14.0" prefHeight="34.0" prefWidth="130.0" promptText="Minimum rating" />
+      <Button fx:id="searchButton" layoutX="359.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleSetFilter" prefHeight="26.0" prefWidth="70.0" text="Set filter">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Button>
+      <Button fx:id="editMovieButton" layoutX="434.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleEditMovie" text="Edit" />
+      <Button fx:id="editCategoryButton" layoutX="125.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleEditCategory" text="Edit" />
+      <ComboBox fx:id="sortCombobox" layoutX="360.0" layoutY="70.0" onAction="#handleSorting" prefHeight="26.0" prefWidth="151.0" promptText="Sort..." />
    </children>
 </AnchorPane>
