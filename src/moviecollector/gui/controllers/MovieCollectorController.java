@@ -6,11 +6,12 @@
 package moviecollector.gui.controllers;
 
 import java.awt.Desktop;
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -47,8 +48,7 @@ import moviecollector.gui.MovieCollectorModel;
 public class MovieCollectorController implements Initializable {
 
     private MovieCollectorModel movieModel = new MovieCollectorModel();    
-    private List<Category> selectedCategories;
-    //private Category selectedCategory;
+    private List<Category> selectedCategories;    
     private boolean filterOn;
     private String searchTerm;
     private double minRating;
@@ -114,7 +114,7 @@ public class MovieCollectorController implements Initializable {
     }
 
     @FXML
-    private void handleDeleteCategory(javafx.event.ActionEvent event) {        
+    private void handleDeleteCategory(ActionEvent event) {        
         if (selectedCategories == null || selectedCategories.size()>1)
         {
         showErrorAlert("You must select a single category to delete");
@@ -147,13 +147,13 @@ public class MovieCollectorController implements Initializable {
     }
 
     @FXML
-    private void handleAddCategory(javafx.event.ActionEvent event) throws IOException {
+    private void handleAddCategory(ActionEvent event) throws IOException {
         Stage primStage = (Stage) categoryListView.getScene().getWindow();
-        openWindow(primStage, null, "AddEditCategoryView.fxml", "New Category");
+        openWindow(primStage, null, "/moviecollector/gui/views/AddEditCategoryView.fxml", "New Category");
     }
 
     @FXML
-    private void handleEditCategory(javafx.event.ActionEvent event) throws IOException {        
+    private void handleEditCategory(ActionEvent event) throws IOException {        
         if (selectedCategories == null || selectedCategories.size()>1)
         {
         showErrorAlert("You must select a single category to edit");
@@ -166,7 +166,7 @@ public class MovieCollectorController implements Initializable {
         }
         Category selectedCategory = selectedCategories.get(0);
         Stage primStage = (Stage) categoryListView.getScene().getWindow();        
-        openWindow(primStage, selectedCategory, "AddEditCategoryView.fxml", "Edit Category");
+        openWindow(primStage, selectedCategory, "/moviecollector/gui/views/AddEditCategoryView.fxml", "Edit Category");
     }
     
     public void openWindow(Stage primStage, Object obj, String viewFXML, String windowMessage)
@@ -179,12 +179,12 @@ public class MovieCollectorController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             
-            if (viewFXML=="AddEditCategoryView.fxml")
+            if (viewFXML=="/moviecollector/gui/views/AddEditCategoryView.fxml")
             {
                 AddEditCategoryController controller = fxmlLoader.getController();
                 controller.setController(this);
             }
-            else if (viewFXML=="AddEditMovieView.fxml")
+            else if (viewFXML=="/moviecollector/gui/views/AddEditMovieView.fxml")
             {
                 AddEditMovieController controller = fxmlLoader.getController();
                 controller.setController(this);
@@ -223,7 +223,7 @@ public class MovieCollectorController implements Initializable {
     }
     
     @FXML
-    private void handleDeleteMovie(javafx.event.ActionEvent event) {
+    private void handleDeleteMovie(ActionEvent event) {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
         if (movie == null)
         {
@@ -251,13 +251,13 @@ public class MovieCollectorController implements Initializable {
     }    
     
     @FXML
-    private void handleAddMovie(javafx.event.ActionEvent event) throws IOException {
+    private void handleAddMovie(ActionEvent event) throws IOException {
         Stage primStage = (Stage) movieListView.getScene().getWindow();
-        openWindow(primStage, null, "AddEditMovieView.fxml", "New Movie");
+        openWindow(primStage, null, "/moviecollector/gui/views/AddEditMovieView.fxml", "New Movie");
     }
 
     @FXML
-    private void handleEditMovie(javafx.event.ActionEvent event) throws IOException {
+    private void handleEditMovie(ActionEvent event) throws IOException {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
         if (movie == null)
         {
@@ -265,11 +265,11 @@ public class MovieCollectorController implements Initializable {
         return;
         }        
         Stage primStage = (Stage) movieListView.getScene().getWindow();
-        openWindow(primStage, movie, "AddEditMovieView.fxml", "Edit Movie");
+        openWindow(primStage, movie, "/moviecollector/gui/views/AddEditMovieView.fxml", "Edit Movie");
     }
     
     @FXML
-    private void handlePlayMovie(javafx.event.ActionEvent event) throws IOException {
+    private void handlePlayMovie(ActionEvent event) throws IOException, SQLException {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
         if (movie == null)
         {
@@ -285,7 +285,7 @@ public class MovieCollectorController implements Initializable {
     }  
 
     @FXML
-    private void handleAddRating(javafx.event.ActionEvent event) {
+    private void handleAddRating(ActionEvent event) throws SQLException {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
         double rating = (double) addRatingSelector.getSelectionModel().getSelectedItem();
         if (movie == null)
@@ -310,8 +310,19 @@ public class MovieCollectorController implements Initializable {
     
     public void setCategoryMovies(List<Category> selectedCategories)
     {
-        List<Movie> categoryMovies = movieModel.readFilteredCategoryMovies(selectedCategories, minRating, searchTerm);
+        boolean isAllCategoriesSelected = false;
         
+        for (Category category : selectedCategories)
+        {
+            if (category.getId()==1)
+            {
+                isAllCategoriesSelected = true;
+                break;
+            }
+        }
+        
+        List<Movie> categoryMovies = (isAllCategoriesSelected==true) ? movieModel.readFilteredMovies(minRating, searchTerm) : movieModel.readFilteredCategoryMovies(selectedCategories, minRating, searchTerm);
+                
         if(sortingByTitle)
         {
             categoryMovies.sort(Comparator.comparing(Movie::getName));
@@ -331,7 +342,7 @@ public class MovieCollectorController implements Initializable {
     }
 
     @FXML
-    private void handleClearFilter(javafx.event.ActionEvent event) {
+    private void handleClearFilter(ActionEvent event) {
         filterOn = false;
         sortingByTitle = false;
         sortingByRating = false;
@@ -349,7 +360,7 @@ public class MovieCollectorController implements Initializable {
     }
 
     @FXML
-    private void handleSetFilter(javafx.event.ActionEvent event) {
+    private void handleSetFilter(ActionEvent event) {
         searchTerm = (!filterTitleField.getText().isEmpty()) ? filterTitleField.getText() : "";
         minRating = (minimumRating.getSelectionModel().getSelectedItem()!=null) ? minimumRating.getSelectionModel().getSelectedItem() : 0;
         filterOn = true;     
@@ -362,7 +373,7 @@ public class MovieCollectorController implements Initializable {
     }
 
     @FXML
-    private void handleSorting(javafx.event.ActionEvent event) {
+    private void handleSorting(ActionEvent event) {
         if (sortCombobox.getSelectionModel().getSelectedIndex()==0)
         {
             sortingByRating = false;

@@ -5,6 +5,7 @@
  */
 package moviecollector.gui;
 
+import java.sql.SQLException;
 import java.util.List;
 import moviecollector.be.Category;
 import moviecollector.be.Movie;
@@ -53,7 +54,7 @@ public class MovieCollectorModel {
         return movieManager.readFilteredMovies(minRating, searchTerm);
     }
     
-    public boolean updateMovie(Movie movie)
+    public boolean updateMovie(Movie movie) throws SQLException
     {
         return movieManager.updateMovie(movie);
     }
@@ -83,7 +84,7 @@ public class MovieCollectorModel {
         return movieManager.isMovieNameUsed(movie);
     }
     
-    public void saveMovie(Movie movie)
+    public void saveMovie(Movie movie) throws SQLException
     {
         movieManager.saveMovie(movie);
     }

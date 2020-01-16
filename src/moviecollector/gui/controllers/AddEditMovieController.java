@@ -95,6 +95,8 @@ public class AddEditMovieController implements Initializable {
 
     @FXML
     private void handleSaveMovie(ActionEvent event) {
+                 
+        try {
         String name = titleTextField.getText();
         String filelink = locationTextField.getText();
         
@@ -142,7 +144,11 @@ public class AddEditMovieController implements Initializable {
             } else {
                 conAlert.close();
             }
-        }              
+        }
+    }
+        catch (Exception e) {
+            showErrorAlert(e.getMessage());
+        }
         
         
         
