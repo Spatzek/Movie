@@ -84,6 +84,10 @@ public class AddEditMovieController implements Initializable {
         
     }    
     
+    /**
+     * Displays a dialog box with message
+     * @param message 
+     */
     private void showErrorAlert(String message)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -93,6 +97,10 @@ public class AddEditMovieController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Validates and saves movie
+     * @param event 
+     */
     @FXML
     private void handleSaveMovie(ActionEvent event) {
                  
@@ -156,6 +164,10 @@ public class AddEditMovieController implements Initializable {
         
     }
 
+    /**
+     * Allows user to choose the location of the movie file
+     * @param event 
+     */
     @FXML
     private void handleMovieLocate(ActionEvent event) {
         JFileChooser jfc = new JFileChooser();
@@ -182,6 +194,10 @@ public class AddEditMovieController implements Initializable {
         }
     }
     
+    /**
+     * Adds category to movie's list of categories
+     * @param event 
+     */
     @FXML
     private void handleAddCategory(ActionEvent event) {
         Category category = categoryCombobox.getSelectionModel().getSelectedItem();
@@ -197,6 +213,10 @@ public class AddEditMovieController implements Initializable {
         
     }
 
+    /**
+     * Removes category from movie's list of categories
+     * @param event 
+     */
     @FXML
     private void handleRemoveCategory(ActionEvent event) {
         Category category = movieCatListView.getSelectionModel().getSelectedItem();
@@ -211,6 +231,10 @@ public class AddEditMovieController implements Initializable {
         movieCatListView.setItems(currentCats);
     }
     
+    /**
+     * Closes window
+     * @param event 
+     */
     @FXML
     private void handleCancel(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -222,6 +246,10 @@ public class AddEditMovieController implements Initializable {
         this.movieController = movieController;
     }
     
+    /**
+     * If editing an existing movie, retrieves and show information about movie
+     * @param movie 
+     */
     public void setText(Movie movie)
     {
         titleTextField.setText(movie.getName());

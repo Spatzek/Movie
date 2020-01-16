@@ -41,7 +41,7 @@ public class CategoryManager {
     }
     
     /**
-     * retrieves list of all categories
+     * Retrieves list of all categories
      * @return List of categories
      */
     public List<Category> readAllCategories()
@@ -50,7 +50,7 @@ public class CategoryManager {
     }
     
     /**
-     * updates the specified category in database
+     * Updates the specified category in database
      * @param category
      * @return true is update performed, else false
      */
@@ -60,7 +60,7 @@ public class CategoryManager {
     }
     
     /**
-     * deletes the specified category
+     * Deletes the specified category
      * @param category
      * @return true is deletion performed, else false
      */

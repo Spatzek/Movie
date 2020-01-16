@@ -89,7 +89,7 @@ public class AddEditCategoryController implements Initializable {
     }
 /**
  * 
- * makes an error in case there is a dublication of names
+ * makes an error in case there is a duplication of names or name isn't entered
  * @param message 
  */
     private void showErrorAlert(String message)
@@ -101,6 +101,10 @@ public class AddEditCategoryController implements Initializable {
         alert.showAndWait();
     }
     
+    /**
+     * Closes window
+     * @param event 
+     */
     @FXML
     private void handleCancel(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -112,6 +116,10 @@ public class AddEditCategoryController implements Initializable {
         this.movieController = movieController;
     }
     
+    /**
+     * If editing an existing category, retrieves and shows existing information about category
+     * @param category 
+     */
     public void setText(Category category)
     {
         categoryTextField.setText(category.getName());

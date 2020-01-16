@@ -107,12 +107,22 @@ public class MovieCollectorController implements Initializable {
         showDeletionSuggestionAlert();
     }    
 
+    /**
+     * Categories selected or deselected by clicking with mouse
+     * are added to or removed from list of selected categories, 
+     * whose associated movies are to be displayed
+     * @param event 
+     */
     @FXML
     private void categorySelected(MouseEvent event) {
         selectedCategories = categoryListView.getSelectionModel().getSelectedItems();
         setCategoryMovies(selectedCategories);
     }
 
+    /**
+     * Deletes single selected category
+     * @param event 
+     */
     @FXML
     private void handleDeleteCategory(ActionEvent event) {        
         if (selectedCategories == null || selectedCategories.size()>1)
@@ -146,12 +156,22 @@ public class MovieCollectorController implements Initializable {
         }
     }
 
+    /**
+     * Opens window allowing user to add category
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleAddCategory(ActionEvent event) throws IOException {
         Stage primStage = (Stage) categoryListView.getScene().getWindow();
         openWindow(primStage, null, "/moviecollector/gui/views/AddEditCategoryView.fxml", "New Category");
     }
 
+    /**
+     * Opens window allow user to edit category
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleEditCategory(ActionEvent event) throws IOException {        
         if (selectedCategories == null || selectedCategories.size()>1)
@@ -169,6 +189,13 @@ public class MovieCollectorController implements Initializable {
         openWindow(primStage, selectedCategory, "/moviecollector/gui/views/AddEditCategoryView.fxml", "Edit Category");
     }
     
+    /**
+     * Opens window according to parameters
+     * @param primStage
+     * @param obj
+     * @param viewFXML .fxml file
+     * @param windowMessage Title of opened window
+     */
     public void openWindow(Stage primStage, Object obj, String viewFXML, String windowMessage)
     {
 
@@ -213,6 +240,10 @@ public class MovieCollectorController implements Initializable {
         }
     }       
         
+    /**
+     * Displays dialog box with message
+     * @param message 
+     */
     private void showErrorAlert(String message)
     {
         Alert errAlert = new Alert(Alert.AlertType.ERROR);
@@ -222,6 +253,10 @@ public class MovieCollectorController implements Initializable {
         errAlert.showAndWait();
     }
     
+    /**
+     * Deletes selected movie
+     * @param event 
+     */
     @FXML
     private void handleDeleteMovie(ActionEvent event) {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
@@ -250,12 +285,22 @@ public class MovieCollectorController implements Initializable {
         }
     }    
     
+    /**
+     * Opens window allowing user to add movie
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleAddMovie(ActionEvent event) throws IOException {
         Stage primStage = (Stage) movieListView.getScene().getWindow();
         openWindow(primStage, null, "/moviecollector/gui/views/AddEditMovieView.fxml", "New Movie");
     }
 
+    /**
+     * Opens window allowing user to edit movie
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleEditMovie(ActionEvent event) throws IOException {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
@@ -268,6 +313,12 @@ public class MovieCollectorController implements Initializable {
         openWindow(primStage, movie, "/moviecollector/gui/views/AddEditMovieView.fxml", "Edit Movie");
     }
     
+    /**
+     * Opens file with selected movie's filepath with default media player
+     * @param event
+     * @throws IOException
+     * @throws SQLException 
+     */
     @FXML
     private void handlePlayMovie(ActionEvent event) throws IOException, SQLException {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
@@ -284,6 +335,11 @@ public class MovieCollectorController implements Initializable {
         
     }  
 
+    /**
+     * Adds selected rating to selected movie
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     private void handleAddRating(ActionEvent event) throws SQLException {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
@@ -303,11 +359,20 @@ public class MovieCollectorController implements Initializable {
         return selectedCategories;
     }
     
+    /**
+     * Displays list of all categories in listview
+     */
     public void setCategories()
     {
         categoryListView.setItems(FXCollections.observableArrayList(movieModel.readAllCategories()));
     }
     
+    /**
+     * Displays list of movies belonging to any of selected categories in listview
+     * Uses variables set from filter and sort methods to pass to methods which
+     * retrieve list of movies according to these
+     * @param selectedCategories 
+     */
     public void setCategoryMovies(List<Category> selectedCategories)
     {
         boolean isAllCategoriesSelected = false;
@@ -335,12 +400,19 @@ public class MovieCollectorController implements Initializable {
         movieListView.setItems(FXCollections.observableArrayList(categoryMovies));
     }
     
+    /**
+     * Clears selection from both listviews
+     */
     private void clear()
     {
         categoryListView.getSelectionModel().clearSelection();
         movieListView.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Clears chosen filter and sorting method, resets instance variables
+     * @param event 
+     */
     @FXML
     private void handleClearFilter(ActionEvent event) {
         filterOn = false;
@@ -359,6 +431,10 @@ public class MovieCollectorController implements Initializable {
         }
     }
 
+    /**
+     * Sets filter according to input from textfield and combobox.
+     * @param event 
+     */
     @FXML
     private void handleSetFilter(ActionEvent event) {
         searchTerm = (!filterTitleField.getText().isEmpty()) ? filterTitleField.getText() : "";
@@ -372,6 +448,10 @@ public class MovieCollectorController implements Initializable {
         }
     }
 
+    /**
+     * Sets sorting method chosen by user
+     * @param event 
+     */
     @FXML
     private void handleSorting(ActionEvent event) {
         if (sortCombobox.getSelectionModel().getSelectedIndex()==0)
@@ -391,6 +471,11 @@ public class MovieCollectorController implements Initializable {
         }
     }
     
+    /**
+     * When opening the program, dialog box displays list of movies with 
+     * rating below specified variable and older than specified number of years,
+     * and offers user choice to delete them
+     */
     private void showDeletionSuggestionAlert()
     {
         List<Movie> movies = movieModel.readBadOldMovies(DELETION_CANDIDATE_MAX_RATING, DELETION_CANDIDATE_AGE_IN_YEARS);
