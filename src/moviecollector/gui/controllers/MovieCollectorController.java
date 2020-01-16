@@ -29,6 +29,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -47,12 +48,14 @@ public class MovieCollectorController implements Initializable {
 
     private MovieCollectorModel movieModel = new MovieCollectorModel();    
     private List<Category> selectedCategories;
-    private Category selectedCategory;
+    //private Category selectedCategory;
     private boolean filterOn;
     private String searchTerm;
     private double minRating;
     private boolean sortingByTitle;
     private boolean sortingByRating;
+    private static final double DELETION_CANDIDATE_MAX_RATING = 6;
+    private static final int DELETION_CANDIDATE_AGE_IN_YEARS = 2;
     
     @FXML
     private ListView<Movie> movieListView;
@@ -101,7 +104,7 @@ public class MovieCollectorController implements Initializable {
         sortCombobox.getItems().addAll("Sort by title", "Sort by rating");        
         categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         setCategories();
-        
+        showDeletionSuggestionAlert();
     }    
 
     @FXML
@@ -111,14 +114,13 @@ public class MovieCollectorController implements Initializable {
     }
 
     @FXML
-    private void handleDeleteCategory(javafx.event.ActionEvent event) {
-        selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
-        if (selectedCategory == null)
+    private void handleDeleteCategory(javafx.event.ActionEvent event) {        
+        if (selectedCategories == null || selectedCategories.size()>1)
         {
-        showErrorAlert("You must select a category to delete");
+        showErrorAlert("You must select a single category to delete");
         return;
         }
-        if (selectedCategory.getId()==1)
+        if (selectedCategories.get(0).getId()==1)
         {
             showErrorAlert("This category can not be deleted");
             return;
@@ -127,6 +129,7 @@ public class MovieCollectorController implements Initializable {
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Confirm deletion");
         alert.setHeaderText(null);
+        Category selectedCategory = selectedCategories.get(0);
         alert.setContentText("Are you sure you want to delete: " + selectedCategory.getName() + "?");
 
         Optional<ButtonType> result = alert.showAndWait();
@@ -150,18 +153,18 @@ public class MovieCollectorController implements Initializable {
     }
 
     @FXML
-    private void handleEditCategory(javafx.event.ActionEvent event) throws IOException {
-        selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
-        if (selectedCategory == null)
+    private void handleEditCategory(javafx.event.ActionEvent event) throws IOException {        
+        if (selectedCategories == null || selectedCategories.size()>1)
         {
-        showErrorAlert("You must select a category to edit");
+        showErrorAlert("You must select a single category to edit");
         return;
         }
-        if (selectedCategory.getId()==1)
+        if (selectedCategories.get(0).getId()==1)
         {
             showErrorAlert("This category can not be edited");
             return;
         }
+        Category selectedCategory = selectedCategories.get(0);
         Stage primStage = (Stage) categoryListView.getScene().getWindow();        
         openWindow(primStage, selectedCategory, "AddEditCategoryView.fxml", "Edit Category");
     }
@@ -360,12 +363,12 @@ public class MovieCollectorController implements Initializable {
 
     @FXML
     private void handleSorting(javafx.event.ActionEvent event) {
-        if (sortCombobox.getSelectionModel().getSelectedItem()=="Sort by title")
+        if (sortCombobox.getSelectionModel().getSelectedIndex()==0)
         {
             sortingByRating = false;
             sortingByTitle = true;            
         }
-        else if (sortCombobox.getSelectionModel().getSelectedItem()=="Sort by rating")
+        else if (sortCombobox.getSelectionModel().getSelectedIndex()==1)
         {
             sortingByTitle = false;
             sortingByRating = true;           
@@ -375,5 +378,36 @@ public class MovieCollectorController implements Initializable {
         {
             setCategoryMovies(selectedCategories);
         }
+    }
+    
+    private void showDeletionSuggestionAlert()
+    {
+        List<Movie> movies = movieModel.readBadOldMovies(DELETION_CANDIDATE_MAX_RATING, DELETION_CANDIDATE_AGE_IN_YEARS);
+        if (!movies.isEmpty())
+        {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.setResizable(true);
+        alert.setTitle("Old movies with low ratings");
+        alert.setHeaderText(null);
+        String movieTitles = "";
+        for (Movie movie : movies)
+        {
+            movieTitles = movieTitles + movie.getName() + ", last seen: " + movie.getLastView() + "\n";
+        }
+        String warning  = "These movies are rated below " + DELETION_CANDIDATE_MAX_RATING + " and are more than " + DELETION_CANDIDATE_AGE_IN_YEARS + " years old.";
+        alert.setContentText(String.format("%s%n%s%n%n%s", warning, "Press ok to delete them, otherwise cancel.", movieTitles));
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK)
+        {
+            movieModel.deleteBadOldMovies(movies);
+            
+        } else
+        {
+            alert.close();
+        }
+    }
     }
 }

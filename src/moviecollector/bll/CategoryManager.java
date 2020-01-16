@@ -85,7 +85,7 @@ public class CategoryManager {
         List<Category> categories = readAllCategories();
         for (Category cat : categories)
         {
-            if (cat.getName().contentEquals(category.getName()))
+            if (cat.getName().contentEquals(category.getName()) && cat.getId()!=category.getId())
             {
                 return true;
             }
@@ -103,31 +103,6 @@ public class CategoryManager {
         {
             return updateCategory(category);
         }
-    }       
-    
-    public static void main(String[] args)
-    {
-        CategoryManager catMan = new CategoryManager();
-        Category cat1 = new Category("");
-        Category cat2 = new Category("");
-        Category cat3 = new Category("");
-        cat1.setId(4);
-        cat2.setId(14);
-        cat3.setId(18);
+    }           
         
-        List<Category> categories = new ArrayList<>();
-        categories.add(cat1);
-        categories.add(cat2);
-        categories.add(cat3);
-        
-        List<Movie> movies = catMan.readFilteredCategoryMovies(categories, 0, "");
-        System.out.println("After");
-        for (Movie movie : movies)
-        {
-            System.out.println(movie);
-        }
-        
-                
-    }
-    
 }

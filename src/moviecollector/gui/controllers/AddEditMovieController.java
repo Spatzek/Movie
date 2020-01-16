@@ -107,9 +107,7 @@ public class AddEditMovieController implements Initializable {
             showErrorAlert("Please enter a name");
             return;
         }
-        
-        // bug to be fixed: if when editing title is changed, and then changed back to original,
-        // will interpret as a name in use
+                
         if (movieModel.isMovieNameUsed(movie))
         {
             showErrorAlert("Please enter a name not already in use");
@@ -126,10 +124,15 @@ public class AddEditMovieController implements Initializable {
         {            
             Alert conAlert = new Alert(Alert.AlertType.CONFIRMATION);
             conAlert.initStyle(StageStyle.UTILITY);
+            conAlert.setResizable(true);
             conAlert.setTitle("Confirm change");
-            conAlert.setHeaderText(null);
-            String movieString = movie.toString();
-            conAlert.setContentText(String.format("%s%n%s", "Are you sure you want to add this:", movieString));
+            conAlert.setHeaderText(null);            
+            String movieCategories = "Categories: ";
+            for (Category category : movie.getCategories())
+            {
+                movieCategories = movieCategories + "'" + category.getName() + "'" + "   ";
+            }
+            conAlert.setContentText(String.format("%s%n%s%n%s", "Are you sure you want to save this:", movie.getName(), movieCategories));
             Optional<ButtonType> result = conAlert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 movieModel.saveMovie(movie);

@@ -71,9 +71,8 @@ public class AddEditCategoryController implements Initializable {
             Alert conAlert = new Alert(Alert.AlertType.CONFIRMATION);
             conAlert.initStyle(StageStyle.UTILITY);
             conAlert.setTitle("Confirm change");
-            conAlert.setHeaderText(null);
-            String categoryString = category.toString();
-            conAlert.setContentText(String.format("%s%n%s", "Are you sure you want to add this:", categoryString));
+            conAlert.setHeaderText(null);            
+            conAlert.setContentText(String.format("%s%n%s", "Are you sure you want to save this:", category.getName()));
             Optional<ButtonType> result = conAlert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 movieModel.saveCategory(category);
