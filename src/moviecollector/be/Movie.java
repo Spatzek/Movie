@@ -91,7 +91,7 @@ public class Movie {
         String movieRating = (getRating()==0) ? "Not rated" : "" + getRating();
         String movieLastView = (getLastView()==null) ? "Never" : "" + getLastView();               
             
-        return id + ", " + name + ", " + movieRating + ", last seen: " + movieLastView;
+        return name + ", " + movieRating + ", last seen: " + movieLastView;
     }
            
 

@@ -138,8 +138,10 @@ public class AddEditMovieController implements Initializable {
             Optional<ButtonType> result = conAlert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 movieModel.saveMovie(movie);
+                if (movieController.getSelectedCategories()!=null)
+                {
                 movieController.setCategoryMovies(movieController.getSelectedCategories());
-                
+                }
                 handleCancel(event);
             } else {
                 conAlert.close();
