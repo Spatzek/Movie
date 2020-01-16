@@ -44,7 +44,7 @@ public class MovieDBDAO {
      * Creates the specified movie in the database.
      *
      * @param movie
-     * @return True if creation performed, else false
+     * @return 
      */    
     public boolean createMovie(Movie movie) throws SQLServerException, SQLException {
 
@@ -95,6 +95,12 @@ public class MovieDBDAO {
         return null;
     }
     
+    /**
+     * Retrieves a list of movies which meet specified requirements.
+     * @param minRating required minimum rating for movie
+     * @param searchTerm required title in whole or part for movie
+     * @return List of movies
+     */
     public List<Movie> readFilteredMovies(double minRating, String searchTerm) {
         try (Connection con = dbs.getConnection()) {
             String sql = "SELECT * FROM Movies WHERE rating >=? AND name LIKE ?;";
@@ -129,7 +135,7 @@ public class MovieDBDAO {
      * Updates movie in the database.
      *
      * @param movie
-     * @return True if update performed, else false
+     * @return 
      */    
     public boolean updateMovie(Movie movie) throws SQLServerException, SQLException {
         try (Connection con = dbs.getConnection()) {
@@ -172,6 +178,11 @@ public class MovieDBDAO {
         return false;
     }
     
+    /**
+     * Deletes movie with matching id from CatMovies table
+     * @param movie
+     * @return true if deletion performed, else false
+     */
     public boolean deleteMovieFromCatMovies(Movie movie) {
         try (Connection con = dbs.getConnection()) {
             String sql = "DELETE FROM CatMovies WHERE movieId = ?;";
@@ -190,6 +201,11 @@ public class MovieDBDAO {
         return false;
     }
     
+    /**
+     * Retrieves list of all categories associated with movie
+     * @param movie
+     * @return List of categories
+     */
     public List<Category> readAllMovieCategories(Movie movie) {
         try (Connection con = dbs.getConnection()) {
             String sql = "SELECT * FROM CatMovies FULL OUTER JOIN Categories ON "
@@ -273,10 +289,16 @@ public class MovieDBDAO {
         return false;
     }
     
+    /**
+     * Retrieves list of movies meeting requirements
+     * @param maxRating movie must have rating below this
+     * @param years movie must be older than this
+     * @return List of movies
+     */
     public List<Movie> readBadOldMovies(double maxRating, int years)
     {                
         try (Connection con = dbs.getConnection()) {
-            String sql = "SELECT * FROM Movies WHERE rating <=? AND lastview <=?;";
+            String sql = "SELECT * FROM Movies WHERE rating <? AND lastview <=?;";
             PreparedStatement stmt = con.prepareStatement(sql);            
            
             LocalDate oldDate = LocalDate.now().minusYears(years);

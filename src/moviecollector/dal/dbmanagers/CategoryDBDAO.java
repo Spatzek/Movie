@@ -183,7 +183,13 @@ public class CategoryDBDAO {
         return null;
     }
     
-     
+    /**
+     * Retrieves a list of movies which meet specified requirements.
+     * @param category required Category movie must belong to
+     * @param minRating required minimum rating for movie
+     * @param searchTerm required title in whole or part for movie
+     * @return List of movies
+     */ 
     public List<Movie> readFilteredCategoryMovies(Category category, double minRating, String searchTerm) {
         try (Connection con = dbs.getConnection()) {
             String sql = "WITH x AS(SELECT movieID FROM CatMovies FULL OUTER JOIN Movies "
