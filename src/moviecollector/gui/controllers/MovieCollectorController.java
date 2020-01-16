@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -47,8 +48,7 @@ import moviecollector.gui.MovieCollectorModel;
 public class MovieCollectorController implements Initializable {
 
     private MovieCollectorModel movieModel = new MovieCollectorModel();    
-    private List<Category> selectedCategories;
-    //private Category selectedCategory;
+    private List<Category> selectedCategories;    
     private boolean filterOn;
     private String searchTerm;
     private double minRating;
@@ -269,7 +269,7 @@ public class MovieCollectorController implements Initializable {
     }
     
     @FXML
-    private void handlePlayMovie(ActionEvent event) throws IOException {
+    private void handlePlayMovie(ActionEvent event) throws IOException, SQLException {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
         if (movie == null)
         {
@@ -285,7 +285,7 @@ public class MovieCollectorController implements Initializable {
     }  
 
     @FXML
-    private void handleAddRating(ActionEvent event) {
+    private void handleAddRating(ActionEvent event) throws SQLException {
         Movie movie = movieListView.getSelectionModel().getSelectedItem();
         double rating = (double) addRatingSelector.getSelectionModel().getSelectedItem();
         if (movie == null)

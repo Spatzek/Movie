@@ -5,6 +5,7 @@
  */
 package moviecollector.bll;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public class MovieManager {
         
     }
     
-    public boolean createMovie(Movie movie)
+    public boolean createMovie(Movie movie) throws SQLException
     {
         return movieDbdao.createMovie(movie);
     }
@@ -41,7 +42,7 @@ public class MovieManager {
         return movieDbdao.readFilteredMovies(minRating, searchTerm);
     }
     
-    public boolean updateMovie(Movie movie)
+    public boolean updateMovie(Movie movie) throws SQLException
     {
         return movieDbdao.updateMovie(movie);
     }
@@ -69,7 +70,7 @@ public class MovieManager {
         return false;
     }
     
-    public void saveMovie(Movie movie)
+    public void saveMovie(Movie movie) throws SQLException
     {
         if (movie.getId()==0)
         {

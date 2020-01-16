@@ -46,7 +46,7 @@ public class MovieDBDAO {
      * @param movie
      * @return True if creation performed, else false
      */    
-    public boolean createMovie(Movie movie) {
+    public boolean createMovie(Movie movie) throws SQLServerException, SQLException {
 
         try (Connection con = dbs.getConnection()) {
             String sql = "INSERT INTO Movies (name, rating, filelink, lastview) VALUES (?,?,?,?);";
@@ -60,12 +60,7 @@ public class MovieDBDAO {
             int updatedRows = stmt.executeUpdate();
             return updatedRows > 0;
 
-        } catch (SQLServerException ex) {
-            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+    }
     }
     
     /**
@@ -136,7 +131,7 @@ public class MovieDBDAO {
      * @param movie
      * @return True if update performed, else false
      */    
-    public boolean updateMovie(Movie movie) {
+    public boolean updateMovie(Movie movie) throws SQLServerException, SQLException {
         try (Connection con = dbs.getConnection()) {
             String sql = "UPDATE Movies SET name = ?, rating = ?, filelink = ?, lastview = ? WHERE id = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -150,12 +145,7 @@ public class MovieDBDAO {
             int updatedRows = stmt.executeUpdate();
             return updatedRows > 0;
             
-        } catch (SQLServerException ex) {
-            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(MovieDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+        } 
     }
 
     /**
