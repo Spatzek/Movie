@@ -310,8 +310,19 @@ public class MovieCollectorController implements Initializable {
     
     public void setCategoryMovies(List<Category> selectedCategories)
     {
-        List<Movie> categoryMovies = movieModel.readFilteredCategoryMovies(selectedCategories, minRating, searchTerm);
+        boolean isAllCategoriesSelected = false;
         
+        for (Category category : selectedCategories)
+        {
+            if (category.getId()==1)
+            {
+                isAllCategoriesSelected = true;
+                break;
+            }
+        }
+        
+        List<Movie> categoryMovies = (isAllCategoriesSelected==true) ? movieModel.readFilteredMovies(minRating, searchTerm) : movieModel.readFilteredCategoryMovies(selectedCategories, minRating, searchTerm);
+                
         if(sortingByTitle)
         {
             categoryMovies.sort(Comparator.comparing(Movie::getName));
